@@ -134,7 +134,7 @@ class Job(models.Model):
     city = models.ForeignKey(City, verbose_name=_('City'), null=True, blank=True)
     outside_location = models.CharField(_('Outside location'), max_length=150, blank=True)
     #url of the company
-    if django.get_version() >= 1.5:
+    if django.get_version() >= '1.5':
         url = models.URLField(max_length=150, blank=True)
     else:
         url = models.URLField(verify_exists=False, max_length=150, blank=True)
