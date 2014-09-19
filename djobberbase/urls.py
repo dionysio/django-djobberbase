@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-
-from django.conf.urls.defaults import *
+import django
+if django.get_version() >= '1.6':
+    from django.conf.urls import patterns, url, include
+else:
+    from django.conf.urls.defaults import *
 from djobberbase.models import Job, Category, Type, City
 from djobberbase.conf import settings as djobberbase_settings
 from djobberbase.feeds import LatestJobsFeed
