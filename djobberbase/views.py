@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, redirect, render_to_response
 from djobberbase.models import Job, Category, Type, JobStat, JobSearch, City
 from djobberbase.postman import *
 from djobberbase.conf import settings as djobberbase_settings
-from django.views.generic.list_detail import object_detail, object_list
-from django.views.generic.create_update import create_object, update_object
+#from django.views.generic.list_detail import object_detail, object_list
+#from django.views.generic.create_update import create_object, update_object
 from django.core.context_processors import csrf
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
@@ -18,7 +18,9 @@ from django.http import Http404
 from django.views.generic.list import ListView
 from django.utils import timezone
 
-from articles.models import Article
+object_detail = lambda *args,**kwargs:  None
+object_list = lambda *args,**kwargs:  None
+update_object =  lambda *args,**kwargs: None
 
 class JobListView(ListView):
 
@@ -32,6 +34,8 @@ class JobListView(ListView):
 
     def get_queryset(self):
         return Job.active.all()
+
+
 
 def job_detail(request, job_id, joburl):
     ''' Displays an active job and its application form depending if 

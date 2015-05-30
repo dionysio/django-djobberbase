@@ -154,7 +154,7 @@
     {% if page_type == 'detail' %}
             <div id="job-bottom"> 
 				<div id="job-post-utils"> 
-					<a href="{% url djobberbase_job_list_category object.category.var_name %}" title="{{ object.category }}">&laquo; Go back to category</a><br />
+					<a href="{% url "djobberbase_job_list_category" object.category.var_name %}" title="{{ object.category }}">&laquo; Go back to category</a><br />
 
                     <!--
 					Is this job ad fake? <a href="#" onclick="Jobber.ReportSpam('http://www.jobberbase.com/demo/report-spam/', 11); return false;" title="report fake ad">Report it!</a> 
@@ -197,7 +197,7 @@
 
 {% if page_type == 'verify' %}    
 
-        <form action="{% url djobberbase_job_confirm object.id object.auth %}" method="post" id="publish_form" name="publish_form">
+        <form action="{% url "djobberbase_job_confirm" object.id object.auth %}" method="post" id="publish_form" name="publish_form">
         {% csrf_token %}
 			<fieldset>
 				<div class="right">
@@ -206,7 +206,7 @@
 				</div>
 									<input type="submit" value="Publish this ad" id="submit" name="submit">
 									&nbsp;or&nbsp;
-				<a title="Edit it" href="{% url djobberbase_job_edit object.id object.auth %}">Edit it</a>
+				<a title="Edit it" href="{% url "djobberbase_job_edit" object.id object.auth %}">Edit it</a>
 			</fieldset>
 		</form>
 

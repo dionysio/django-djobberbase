@@ -8,7 +8,7 @@
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss/all/" />
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/screen.css" type="text/css" media="screen" />
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{% if selected_category %} {% url djobberbase_feed selected_category.var_name %} {% else %} {% url djobberbase_feed 'all' %} {% endif %}" />
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{% if selected_category %} {% url "djobberbase_feed" selected_category.var_name %} {% else %} {% url "djobberbase_feed" 'all' %} {% endif %}" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js" type="text/javascript"></script>    
  	<script src="{{STATIC_URL}}js/jquery.form.js" type="text/javascript"></script>
 	<script src="{{STATIC_URL}}js/cmxforms.js" type="text/javascript"></script>
@@ -38,7 +38,7 @@
 
         <div id="header">
 		    <h1 id="logo">
-                <a href="{% url djobberbase_job_list %}" title="Djobberbase">
+                <a href="{% url "djobberbase_job_list" %}" title="Djobberbase">
                     {{ DJOBBERBASE_SITE_NAME }}
                 </a>
             </h1>
@@ -47,13 +47,13 @@
 		    </ul>
 
 		    <div id="the_feed">
-			    <a href="{% url djobberbase_feed 'all' %}" title="Subscribe to the RSS feed"><img src="{{STATIC_URL}}img/bt-rss.png" alt="RSS" /></a>
+			    <a href="{% url "djobberbase_feed" 'all' %}" title="Subscribe to the RSS feed"><img src="{{STATIC_URL}}img/bt-rss.png" alt="RSS" /></a>
 		    </div>
 	    </div><!-- #header -->
 
         <div id="box">
 			<div id="search">
-				<form id="search_form" method="post" action="{% url djobberbase_job_search %}">
+				<form id="search_form" method="post" action="{% url "djobberbase_job_search" %}">
                 {% csrf_token %}
 					<fieldset>
 						<div>
@@ -68,7 +68,7 @@
 			</div><!-- #search -->
 
 			<div class="addJob">
-				<a href="{% url djobberbase_job_post %}" title="Post a new job" class="add">
+				<a href="{% url "djobberbase_job_post" %}" title="Post a new job" class="add">
                     Post a new job
                 </a>
 			</div><!-- .addJob -->
@@ -82,7 +82,7 @@
             {% for category in categories %}
 
 			<li id="{{ category.var_name }}" {% if category.var_name == selected_category.var_name %}class="selected"{% endif %}>
-                <a href="{% url djobberbase_job_list_category category.var_name %}" title="{{ category }}">
+                <a href="{% url "djobberbase_job_list_category" category.var_name %}" title="{{ category }}">
                 <span>{{ category }}</span>
                 <span class="cnr">&nbsp;</span>
                 </a>
@@ -103,7 +103,7 @@
 		    <br />
             {% for category in categories %}
                 <strong>{{ category.get_total_jobs }}</strong>
-                <a href="{% url djobberbase_job_list_category category.var_name %}">{{ category }}</a>
+                <a href="{% url "djobberbase_job_list_category" category.var_name %}">{{ category }}</a>
                 <br />
             {% endfor %}
 	    </div><!-- #stats --> 
@@ -120,11 +120,11 @@
 		<div id="footer-contents"> 
 			<div id="footer-col1"> 
             Use:<br /> 
-            <a href="{% url djobberbase_cities_list %}">Cities</a>
+            <a href="{% url "djobberbase_cities_list" %}">Cities</a>
             <br />
-            <a href="{% url djobberbase_jobs_in_other_cities %}">Jobs in other cities</a>
+            <a href="{% url "djobberbase_jobs_in_other_cities" %}">Jobs in other cities</a>
             <br />    
-            <a href="{% url djobberbase_companies %}">Companies</a>
+            <a href="{% url "djobberbase_companies" %}">Companies</a>
             <br />
             <a href="/admin">Admin</a>
             <br />
