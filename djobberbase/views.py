@@ -84,9 +84,9 @@ def job_detail(request, job_id, joburl):
                                 _('Your application was sent successfully.'))
                     extra_context['page_type'] = 'application'
                     queryset = Job.active.filter(joburl=joburl)
-                    return object_detail(request, queryset=queryset,
-                                        object_id=job_id,
-                                        extra_context=extra_context)
+                    return render_to_response('djobberbase/job_detail.html',
+                                       extra_context,
+                                       context_instance=RequestContext(request))
                 else:
                     extra_context['form_error'] = True 
 
@@ -101,10 +101,10 @@ def job_detail(request, job_id, joburl):
 
         # Only display the job, without an application form
         else:
-            queryset = Job.active.filter(joburl=joburl)
-            return object_detail(request, queryset=queryset,
-                                object_id=job_id,
-                                extra_context=extra_context)
+            extra_context['object'] = job
+            return render_to_response('djobberbase/job_detail.html',
+                                       extra_context,
+                                       context_instance=RequestContext(request))
 
     # Instead of throwing a 404 error redirect to job unavailable page 
     except Job.DoesNotExist:
