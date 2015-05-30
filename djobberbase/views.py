@@ -3,6 +3,7 @@
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from djobberbase.models import Job, Category, Type, JobStat, JobSearch, City
 from djobberbase.postman import *
+from djobberbase.conf import settings as djobberbase_settings
 from django.views.generic.list_detail import object_detail, object_list
 from django.views.generic.create_update import create_object, update_object
 from django.core.context_processors import csrf
@@ -11,9 +12,26 @@ from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 from djobberbase.helpers import *
 from djobberbase.forms import ApplicationForm, JobForm
-from djobberbase.conf import settings as djobberbase_settings
 from django.db.models import Count
 from django.http import Http404
+
+from django.views.generic.list import ListView
+from django.utils import timezone
+
+from articles.models import Article
+
+class JobListView(ListView):
+
+    model = Job
+
+    def get_context_data(self, **kwargs):
+        context = super(JobListView, self).get_context_data(**kwargs)
+        context['page_type'] = 'index'
+        context['paginate_by'] = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
+        return context
+
+    def get_queryset(self):
+        return Job.active.all()
 
 def job_detail(request, job_id, joburl):
     ''' Displays an active job and its application form depending if 
