@@ -7,6 +7,7 @@ else:
 from djobberbase.models import Job, Category, Type, City
 from djobberbase.conf import settings as djobberbase_settings
 from djobberbase.feeds import LatestJobsFeed
+from djobberbase.views import JobListView
 
 if djobberbase_settings.DJOBBERBASE_CAPTCHA_POST == 'simple':
     from djobberbase.forms import CaptchaJobForm
@@ -15,42 +16,10 @@ else:
     from djobberbase.forms import JobForm
     form_class = JobForm
 
-
-urlpatterns = patterns('django.views.generic',
-
-    #An index view
-    url(r'^$',
-        'list_detail.object_list', 
-        { 'queryset': Job.active.all(),          
-          'extra_context': {'page_type': 'index'},
-          'paginate_by': djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE},
-        name='djobberbase_job_list'),
-    
-    #Cities view    
-    url(r'^'+djobberbase_settings.DJOBBERBASE_CITIES_URL+'/$',
-        'list_detail.object_list', 
-        { 'queryset': City.objects.all(),
-          'extra_context': {'page_type': 'cities', 
-                    'other_cities_total': Job.active.filter(city=None).count}},
-        name='djobberbase_cities_list'),
-
-    #post new job
-    url(r'^'+djobberbase_settings.DJOBBERBASE_POST_URL+'/$',
-        'create_update.create_object', 
-        { 'form_class': form_class, 
-          'post_save_redirect': '../'+
-          djobberbase_settings.DJOBBERBASE_VERIFY_URL+'/%(id)d/%(auth)s/'},
-        name='djobberbase_job_post'),
-
-    #job unavailable
-    url(r'^'+djobberbase_settings.DJOBBERBASE_UNAVAILABLE_URL+'/$',
-        'simple.direct_to_template', 
-        {'template': 'djobberbase/unavailable.html'},
-        name='djobberbase_job_unavailable'),
-)
-
 urlpatterns += patterns('',
-
+    #An index view
+    url(r'^$', JobListView.as_view(), name='djobberbase_job_list'),
+    
     #verify job
     url(r'^'+djobberbase_settings.DJOBBERBASE_VERIFY_URL+
         '/(?P<job_id>\d+)/(?P<auth>[-\w]+)/$',
