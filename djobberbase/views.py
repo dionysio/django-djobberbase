@@ -23,19 +23,24 @@ object_list = lambda *args,**kwargs:  None
 update_object =  lambda *args,**kwargs: None
 
 class JobListView(ListView):
-
     model = Job
-
     def get_context_data(self, **kwargs):
         context = super(JobListView, self).get_context_data(**kwargs)
         context['page_type'] = 'index'
         context['paginate_by'] = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
         return context
-
     def get_queryset(self):
         return Job.active.all()
 
-
+class CityListView(ListView):
+    model = City
+    def get_context_data(self, **kwargs):
+        context = super(CityListView, self).get_context_data(**kwargs)
+        context['page_type'] = 'cities'
+        context['other_cities_total'] = Job.active.filter(city=None).count
+        return context
+    def get_queryset(self):
+        return City.objects.all()
 
 def job_detail(request, job_id, joburl):
     ''' Displays an active job and its application form depending if 
