@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^$', JobListView.as_view(), name='djobberbase_job_list'),
     url(r'^'+djobberbase_settings.DJOBBERBASE_CITIES_URL+'/$', 
         CityListView.as_view(), name='djobberbase_cities_list'),
-    url(r'^cities-list', JobListView.as_view(), name='djobberbase_cities_list'),
+    url(r'^cities-list', CityListView.as_view(), name='djobberbase_cities_list'),
     url(r'^job-post', JobListView.as_view(), name='djobberbase_job_post'),
     url(r'^job-un', JobListView.as_view(), name='djobberbase_job_unavailable'),
     #verify job
