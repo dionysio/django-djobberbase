@@ -29,7 +29,7 @@ img
 body
 {	
 	color:#444;
-	font:70.5% /1.5 Arial,Helvetica,sans-serif;
+	font:70.5% /1.5 'Roboto',Arial,Helvetica,sans-serif;
 	line-height:1.5;
 	text-align:center;
 }
@@ -75,7 +75,7 @@ body,html
 pre,code
 {
 	background:#eaeaea;
-    font-family: "museo-sans-1","museo-sans-2", Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', "museo-sans-1","museo-sans-2", Arial, Helvetica, sans-serif;
 	padding:5px;
 	white-space:normal;
 }
@@ -116,7 +116,7 @@ h1#logo
 h1#logo a
 {
 	background:none;
-    font-family: 'Ubuntu', arial, serif;
+    font-family: 'Roboto', arial, serif;
     font-size: 55px;
     font-weight:bold;
     text-decoration:none;
@@ -137,7 +137,7 @@ ul#top
 ul#top li
 {
 	background-color:transparent;
-	color:#00CC33;
+	color:#2E5ACD;
 	display:inline;
 	margin-left:2px;
 }
@@ -197,9 +197,9 @@ div#box .addJob
 	right:17px;
 	top:20px;
     border-style:dashed;
-    border-color:#3AF268;
+    border-color:#29B2F9;
     border-width:6px;
-    background-color:#009926;
+    background-color:#1B54CF;
     font-family: Tahoma, Geneva, sans-serif;
     text-shadow: 2px 2px 3px #000;
     font-size: 1.8em;
@@ -236,13 +236,13 @@ div#box .addJob a.add:hover
 #content a
 {
 	background-color:transparent;
-	color:#00CC33;
+	color:#2E5ACD;
 	padding:2px;
 }
 
 #content a:hover
 {
-	background-color:#00CC33;
+	background-color:#2E5ACD;
 	color:#fff;
 	padding:2px;
 	text-decoration:none;
@@ -266,7 +266,7 @@ div#box .addJob a.add:hover
 
 div#categs-nav
 {
-	background:#00CC33;
+	background:#2E5ACD;
 	float:left;
 	font-size:11px;
 	margin-top:25px;
@@ -374,14 +374,14 @@ div#categs-nav ul li.selected a span.cnr
 
 #sidebar a
 {
-	color:#00CC33;
+	color:#2E5ACD;
 	font-size:11px;
 	padding:2px;
 }
 
 #sidebar a:hover
 {
-	background-color:#00CC33;
+	background-color:#2E5ACD;
 	color:#fff;
 	padding:2px;
 	text-decoration:none;
@@ -519,7 +519,7 @@ textarea.error
 
 #job-details h2
 {
-	color:#00CC33;
+	color:#2E5ACD;
 	font-size:26px;
 	font-weight:normal;
 	line-height:1.2;
@@ -668,7 +668,7 @@ span.la
 #frm-send-edit-link input#submit,
 #apply-online input#submit
 {
-	background-color:#00CC33;
+	background-color:#2E5ACD;
 	border:1px solid #00691A;
 	color:#fff;
 	cursor:hand;
@@ -776,14 +776,14 @@ td.send-to-friend-address-label
 a
 {
 	background-color:transparent;
-	color:#00CC33;
+	color:#2E5ACD;
 	text-decoration:none;
 }
 
 a:hover
 {
 	background-color:transparent;
-	color:#00CC33;
+	color:#2E5ACD;
 	text-decoration:underline;
 }
 
@@ -850,7 +850,7 @@ h3.page-heading a:hover,
 div.page-heading a:hover
 {
 	background-color:#fff !important;
-	color:#00CC33 !important;
+	color:#2E5ACD !important;
 }
 
 h4
