@@ -7,7 +7,7 @@ else:
 from djobberbase.models import Job, Category, Type, City
 from djobberbase.conf import settings as djobberbase_settings
 from djobberbase.feeds import LatestJobsFeed
-from djobberbase.views import JobListView
+from djobberbase.views import JobListView, CityListView
 
 if djobberbase_settings.DJOBBERBASE_CAPTCHA_POST == 'simple':
     from djobberbase.forms import CaptchaJobForm
@@ -19,10 +19,11 @@ else:
 urlpatterns = patterns('',
     #An index view
     url(r'^$', JobListView.as_view(), name='djobberbase_job_list'),
+    url(r'^'+djobberbase_settings.DJOBBERBASE_CITIES_URL+'/$', 
+        CityListView.as_view(), name='djobberbase_cities_list'),
     url(r'^cities-list', JobListView.as_view(), name='djobberbase_cities_list'),
     url(r'^job-post', JobListView.as_view(), name='djobberbase_job_post'),
     url(r'^job-un', JobListView.as_view(), name='djobberbase_job_unavailable'),
-
     #verify job
     url(r'^'+djobberbase_settings.DJOBBERBASE_VERIFY_URL+
         '/(?P<job_id>\d+)/(?P<auth>[-\w]+)/$',
