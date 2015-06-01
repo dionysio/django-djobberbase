@@ -16,7 +16,15 @@ from django.db.models import Count
 from django.http import Http404
 
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 from django.utils import timezone
+
+if djobberbase_settings.DJOBBERBASE_CAPTCHA_POST == 'simple':
+    from djobberbase.forms import CaptchaJobForm
+    _form_class = CaptchaJobForm
+else:
+    from djobberbase.forms import JobForm
+    _form_class = JobForm
 
 object_detail = lambda *args,**kwargs:  None
 object_list = lambda *args,**kwargs:  None
@@ -41,6 +49,11 @@ class CityListView(ListView):
         return context
     def get_queryset(self):
         return City.objects.all()
+
+class JobCreateView(CreateView):
+    model = Job
+    form_class = _form_class
+    success_url = '../'+djobberbase_settings.DJOBBERBASE_VERIFY_URL+'/%(id)d/%(auth)s/'
 
 def job_detail(request, job_id, joburl):
     ''' Displays an active job and its application form depending if 
