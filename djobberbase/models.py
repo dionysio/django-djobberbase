@@ -30,7 +30,7 @@ class Category(models.Model):
         a category order in case no one is provided.
     '''
     name = models.CharField(_('Name'), unique=True, max_length=32, blank=False)
-    var_name = models.SlugField(_('Slug'), unique=True, max_length=32, blank=False)
+    var_name = models.SlugField(_('Slug'), unique=True, max_length=64, blank=False)
     title = models.TextField(_('Title'), blank=True)
     description = models.TextField(_('Description'), blank=True)
     keywords = models.TextField(_('Keywords'), blank=True)
@@ -59,7 +59,7 @@ class Category(models.Model):
             except Category.DoesNotExist:
                 self.category_order = 0
         if not self.var_name:
-            self.var_name = slugify(self.name)
+            self.var_name = slugify(self.name)[:63]
         super(Category, self).save(*args, **kwargs)
 
 
@@ -69,7 +69,7 @@ class Type(models.Model):
         save() method in case it's not provided.
     '''
     name = models.CharField(_('Name'), unique=True, max_length=16, blank=False)
-    var_name = models.SlugField(_('Slug'), unique=True, max_length=32, blank=False)
+    var_name = models.SlugField(_('Slug'), unique=True, max_length=64, blank=False)
 
     class Meta:
         verbose_name = _('Type')
@@ -80,7 +80,7 @@ class Type(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.var_name:
-            self.var_name = slugify(self.name)
+            self.var_name = slugify(self.name)[:63]
         super(Type, self).save(*args, **kwargs)
 
 
@@ -90,7 +90,7 @@ class City(models.Model):
         to slugify name to ascii_name.
     '''
     name = models.CharField(_('Name'), unique=True, max_length=50, blank=False)
-    ascii_name = models.SlugField(_('ASCII Name'), unique=True, max_length=50, blank=False)
+    ascii_name = models.SlugField(_('ASCII Name'), unique=True, max_length=64, blank=False)
 
     class Meta:
         verbose_name = _('City')
@@ -104,7 +104,7 @@ class City(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.ascii_name:
-            self.ascii_name = slugify(self.name)
+            self.ascii_name = slugify(self.name)[:63]
         super(City, self).save(*args, **kwargs)
 
 
@@ -144,7 +144,7 @@ class Job(models.Model):
     views_count = models.IntegerField(editable=False, default=0)
     auth = models.CharField(blank=True, editable=False, max_length=32)
     #url of the job post
-    joburl = models.CharField(blank=True, editable=False, max_length=32)
+    joburl = models.CharField(blank=True, editable=False, max_length=64)
     poster_email = models.EmailField(_('Poster email'), blank=False, help_text=_('Applications will be sent to this address.'))
     apply_online = models.BooleanField(default=True, verbose_name=_('Allow online applications.'),
                                     help_text=_('If you are unchecking this, then add a description on how to apply online!'))
@@ -257,9 +257,9 @@ class Job(models.Model):
         self.company_slug = slugify(self.company)
 
         #saving job url
-        self.joburl = slugify(self.title) + \
+        self.joburl = (slugify(self.title) + \
                         '-' + djobberbase_settings.DJOBBERBASE_AT_URL + \
-                        '-' + slugify(self.company)
+                        '-' + slugify(self.company))[:63]
 
         #saving with textile
         if djobberbase_settings.DJOBBERBASE_MARKUP_LANGUAGE == 'textile':
