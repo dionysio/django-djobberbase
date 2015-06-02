@@ -29,8 +29,8 @@ class JobForm(forms.ModelForm):
             'outside_location': forms.TextInput(attrs={'id':'location_outside_ro_where', \
              'maxlength':140, 'size':50}),
             'company': forms.TextInput(attrs={'size':40}),
-            'url': forms.TextInput(attrs={'size':35}),
-            'poster_email': forms.TextInput(attrs={'size':40}),
+            'url': forms.TextInput(attrs={'size':31}),
+            'poster_email': forms.TextInput(attrs={'size':70}),
         }
 
     def __init__(self, *args, **kwargs):
