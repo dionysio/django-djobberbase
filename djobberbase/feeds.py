@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from djobberbase.models import Category, Job
 from djobberbase.conf.settings import DJOBBERBASE_SITE_NAME
 
+
 class LatestJobsFeed(Feed):
 
     def get_object(self, request, var_name):

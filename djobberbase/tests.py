@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from djobberbase.models import Job, Type, Category, City
+from djobberbase.models import Job, Type, Category, Place
 from djobberbase.conf import settings
 from django.test.client import Client
 from django.core.urlresolvers import reverse
@@ -27,9 +27,9 @@ class JobTestCase(unittest.TestCase):
         self.job_type_3 = Type.objects.create(name='Freelance')
 
         # Creating a couple of cities
-        self.city_1 = City.objects.create(name='Los Angeles', 
-                                                        ascii_name='la')
-        self.city_2 = City.objects.create(name='San Francisco')
+        self.city_1 = Place.objects.create(name='Los Angeles',
+                                           ascii_name='la')
+        self.city_2 = Place.objects.create(name='San Francisco')
 
         # Creating a job
         self.job_1 = Job.objects.create(category=self.category_1, 
@@ -81,7 +81,7 @@ class JobTestCase(unittest.TestCase):
         self.assertEqual(self.job_type_2.var_name, 'part-time')
         self.assertEqual(self.job_type_3.var_name, 'freelance')
 
-        # Test city slugs
+        # Test place slugs
         self.assertEqual(self.city_1.ascii_name, 'la')
         self.assertEqual(self.city_2.ascii_name, 'san-francisco')
 
@@ -128,7 +128,7 @@ class JobTestCase(unittest.TestCase):
             published.
         '''
         self.job_1.activate()
-        self.assertEqual(self.job_2.email_published_before(), True)
+        self.assertEqual(self.job_2.email_published_before, True)
 
     def testIndexView(self):
         response = self.client.get(reverse('djobberbase_job_list'))

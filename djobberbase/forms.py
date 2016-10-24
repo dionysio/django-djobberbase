@@ -2,11 +2,15 @@
 
 from django import forms
 from djobberbase.models import Job, Category, Type, JobStat
-from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from djobberbase.conf import settings as djobberbase_settings
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, timedelta
+
+try:
+    from django.utils.encoding import force_unicode
+except:
+    from django.utils.encoding import force_text as force_unicode
 
 class HorizRadioRenderer(forms.RadioSelect.renderer):
     """ this overrides widget method to put radio buttons horizontally
@@ -19,16 +23,15 @@ class HorizRadioRenderer(forms.RadioSelect.renderer):
 class JobForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = ('category', 'jobtype', 'title', 'description', 'company', \
-        'city', 'outside_location', 'url', 'poster_email', 'apply_online')
+        fields = ('category', 'jobtype', 'title', 'description', 'company', 'place', 'url')
         widgets = {
             'jobtype': forms.RadioSelect(renderer=HorizRadioRenderer),
             'title': forms.TextInput(attrs={'size':50}),
             'description': forms.Textarea(attrs={'rows':15, 'cols':80}),
-            'city': forms.Select(attrs={'id':'city_id'}),
+            'place': forms.Select(attrs={'id':'city_id'}),
             'outside_location': forms.TextInput(attrs={'id':'location_outside_ro_where', \
              'maxlength':140, 'size':50}),
-            'company': forms.TextInput(attrs={'size':40}),
+            'submitter': forms.TextInput(attrs={'size':40}),
             'url': forms.TextInput(attrs={'size':31}),
             'poster_email': forms.TextInput(attrs={'size':70}),
         }

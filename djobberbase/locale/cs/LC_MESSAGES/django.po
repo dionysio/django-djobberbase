@@ -1,0 +1,242 @@
+# -*- coding: utf-8 -*-
+# Djobberbase czech translation file.
+# Copyright (C) 2016 Dionyz Lazar
+# This file is distributed under the same license as the django-djobberbase package.
+# Dionyz Lazar <contact@dionysio.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-10 02:43-0500\n"
+"PO-Revision-Date: 2016-10-05 19:22+0200\n"
+"Last-Translator: Dionyz Lazar <contact@dionysio.com>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: admin.py:9
+msgid "Activate selected jobs."
+msgstr "Aktivovat vybrané pracovní pozice."
+
+#: admin.py:13
+msgid "Deactivate selected jobs."
+msgstr "Deaktivovat vybrané pracovní pozice."
+
+#: admin.py:17
+msgid "Mark selected jobs as spotlight."
+msgstr "Označit vybrané pracovní pozice."
+
+#: admin.py:21
+msgid "Job Details"
+msgstr "Detaily pracovní pozice"
+
+#: admin.py:23
+msgid "Company Info"
+msgstr "Informace o společnosti"
+
+#: admin.py:24
+msgid "Admin Info"
+msgstr "Informace o správcovi"
+
+#: feeds.py:20
+#, python-format
+msgid " %(site_name)s RSS Job feed"
+msgstr "%(site_name)s RSS"
+
+#: feeds.py:22
+#, python-format
+msgid ": %(category)s jobs"
+msgstr ": pracovní pozice z kategorie %(category)s"
+
+#: feeds.py:33
+msgid "Latest jobs"
+msgstr "Nejnovější pracovní pozice"
+
+#: feeds.py:35
+#, python-format
+msgid "Latest jobs for %(category)s "
+msgstr "Nejnovější pracovní pozice z kategorie %(category)s"
+
+#: forms.py:81
+#, python-format
+msgid ""
+"You need to wait %(remaining)s more minute(s) before you can apply for a job "
+"again."
+msgstr ""
+"Vyčkejte %(remaining)s minut než se budete moci ucházet o zaměstnání znovu."
+
+#: forms.py:87
+msgid "Your resume/CV has an invalid extension."
+msgstr "Váš životopis / CV má neplatnou příponu."
+
+#: forms.py:91
+#, python-format
+msgid "Your resume/CV must not exceed the file size limit. (%(size)sMB)"
+msgstr ""
+"Váš životopis / CV nesmí překročit limit velikosti souboru. ((%(size)sMB)"
+
+#: models.py:26 models.py:65 models.py:85
+msgid "Name"
+msgstr "Jméno"
+
+#: models.py:27 models.py:66
+msgid "Slug"
+msgstr "Slug"
+
+#: models.py:28 models.py:116
+msgid "Title"
+msgstr "Titul"
+
+#: models.py:29 models.py:117
+msgid "Description"
+msgstr "Popis"
+
+#: models.py:30 models.py:281
+msgid "Keywords"
+msgstr "Klíčová slova"
+
+#: models.py:31
+msgid "Category order"
+msgstr "Pořadí kategorií"
+
+#: models.py:35 models.py:114
+msgid "Category"
+msgstr "Kategorie"
+
+#: models.py:36
+msgid "Categories"
+msgstr "Kategorie"
+
+#: models.py:69
+msgid "Type"
+msgstr "Typ"
+
+#: models.py:70
+msgid "Types"
+msgstr "Typy"
+
+#: models.py:86
+msgid "ASCII Name"
+msgstr "ASCII jméno"
+
+#: models.py:89 models.py:122
+msgid "Place"
+msgstr "Město"
+
+#: models.py:90
+msgid "Cities"
+msgstr "Města"
+
+#: models.py:110
+msgid "Inactive"
+msgstr "Neaktivní"
+
+#: models.py:111
+msgid "Temporary"
+msgstr "Dočasný"
+
+#: models.py:112
+msgid "Active"
+msgstr "Aktivní"
+
+#: models.py:115
+msgid "Job Type"
+msgstr "Typ pracovní pozice"
+
+#: models.py:119
+msgid "Company"
+msgstr "Společnost"
+
+#: models.py:123
+msgid "Outside location"
+msgstr "Externí lokace"
+
+#: models.py:126 models.py:282
+msgid "Created on"
+msgstr "Vytvořeno dne"
+
+#: models.py:133
+msgid "Poster email"
+msgstr "Emailová adresa zadávatele"
+
+#: models.py:133
+msgid "Applications will be sent to this address."
+msgstr "Žádosti budou zasílány na tuto adresu."
+
+#: models.py:134
+msgid "Allow online applications."
+msgstr "Umožnit online žádosti."
+
+#: models.py:135
+msgid ""
+"If you are unchecking this, then add a description on how to apply online!"
+msgstr ""
+"Pokud ste toto odškrtli, pak přidejte popis jak zažádat o pracovní pozici!"
+
+#: models.py:136
+msgid "Spotlight"
+msgstr "Destacado"
+
+#: models.py:142
+msgid "Job"
+msgstr "Pracovní pozice"
+
+#: models.py:143
+msgid "Jobs"
+msgstr "Pracovní pozice"
+
+#: models.py:219
+msgid "You must select or type a job location."
+msgstr "Vyberte lokalitu pracovní pozice-"
+
+#: models.py:258
+msgid "Application"
+msgstr "Žádost"
+
+#: models.py:259
+msgid "Hit"
+msgstr "Návštěva"
+
+#: models.py:260
+msgid "Spam"
+msgstr "Nahlásit spam"
+
+#: models.py:268
+msgid "Job Stat"
+msgstr "Statistiky pracovní pozice"
+
+#: models.py:269
+msgid "Job Stats"
+msgstr "Statistiky pracovních pozic"
+
+#: models.py:285
+msgid "Search"
+msgstr "Vyhledávání"
+
+#: models.py:286
+msgid "Searches"
+msgstr "Vyhledávání"
+
+#: views.py:62
+msgid "Your application was sent successfully."
+msgstr "Vaše žádost byla odeslána."
+
+#: views.py:173
+msgid "Your job post needs to be verified by a moderator."
+msgstr "Vaše pracovní ponuka musí být potvrzena administrátorem."
+
+#: views.py:180
+msgid "Your job post has been published."
+msgstr "Vaše ponuka byla zveřejněna."
+
+#: views.py:218
+msgid "Your job has been activated."
+msgstr "Vaše ponuka byla aktivována."
+
+#: views.py:233
+msgid "Your job has been deactivated."
+msgstr "Vaše ponuka byla deaktivována"

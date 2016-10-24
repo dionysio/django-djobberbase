@@ -121,7 +121,7 @@ msgid "ASCII Name"
 msgstr "Nombre ASCII"
 
 #: models.py:89 models.py:122
-msgid "City"
+msgid "Place"
 msgstr "Localidad"
 
 #: models.py:90

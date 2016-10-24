@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if jobs_title %}
+    <h2>{% trans jobs_title %}</h2>
+{% endif %}
+
+{% for job in jobs %}
+    <div class="{% if is_spotlight %}row-spot{% else %}{% cycle 'row' 'row-alt' %}{% endif %}">
+        <span class="row-info">
+            <label class="jobtype jobtype-{{job.jobtype.var_name}}">{{job.jobtype.name}}</label>
+            <a href="{% url 'djobberbase:job_detail' job.company job.title|slugify job.pk %}" title="{{ job }}">{{ job }}</a>
+            <span class="la">{% trans 'at' %}</span> {{ job.company }}
+            <span class="la">{% trans 'in' %}</span> {{ job.city }}
+        </span>
+        {% if is_spotlight %}
+        <span class="spotlight">&#9734</span>
+        {% else %}
+        <span class="time-posted">
+            &#9200 {{ job.created_on|date:"j-m-Y" }}
+        </span>
+        {% endif %}
+    </div>
+{% endfor %}

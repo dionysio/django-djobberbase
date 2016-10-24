@@ -1,23 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import get_object_or_404, redirect, render_to_response
-from djobberbase.models import Job, Category, Type, JobStat, JobSearch, City
-from djobberbase.postman import *
-from djobberbase.conf import settings as djobberbase_settings
-#from django.views.generic.list_detail import object_detail, object_list
-#from django.views.generic.create_update import create_object, update_object
-from django.core.context_processors import csrf
+from django.shortcuts import get_object_or_404, redirect
+from djobberbase.models import Job, Category, Type, JobStat, JobSearch, Place
+from django.template.context_processors import csrf
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-from django.template import RequestContext
 from djobberbase.helpers import *
-from djobberbase.forms import ApplicationForm, JobForm
+from djobberbase.forms import ApplicationForm
 from django.db.models import Count
 from django.http import Http404
+from django.urls import reverse
 
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
-from django.utils import timezone
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.detail import DetailView
 
 if djobberbase_settings.DJOBBERBASE_CAPTCHA_POST == 'simple':
     from djobberbase.forms import CaptchaJobForm
@@ -26,175 +22,168 @@ else:
     from djobberbase.forms import JobForm
     _form_class = JobForm
 
-object_detail = lambda *args,**kwargs:  None
-object_list = lambda *args,**kwargs:  None
-update_object =  lambda *args,**kwargs: None
 
-class JobListView(ListView):
+class ExtraContextMixin:
+    extra_context = {}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.extra_context)
+        return context
+
+
+class GenericJobListView(ExtraContextMixin, ListView):
     model = Job
-    def get_context_data(self, **kwargs):
-        context = super(JobListView, self).get_context_data(**kwargs)
-        context['page_type'] = 'index'
-        context['paginate_by'] = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
-        return context
-    def get_queryset(self):
-        return Job.active.all()
+    paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
 
-class CityListView(ListView):
-    model = City
-    def get_context_data(self, **kwargs):
-        context = super(CityListView, self).get_context_data(**kwargs)
-        context['page_type'] = 'cities'
-        context['other_cities_total'] = Job.active.filter(city=None).count
-        return context
-    def get_queryset(self):
-        return City.objects.all()
 
-class JobCreateView(CreateView):
+    def get_queryset(self):
+        if self.kwargs.get('categories'):
+            categories = self.kwargs['categories'].split('/')
+        else:
+            jobs = Job.active.all().select_related('category', 'jobtype', 'place')
+        return jobs
+
+class JobListView(GenericJobListView):
+    template_name = 'djobberbase/index.html'
+
+
+
+class CityListView(ExtraContextMixin, ListView):
+    model = Place
+    extra_context = {'page_type': 'cities',
+                     'other_cities_total': lambda: Job.active.filter(city=None).count()}
+
+
+class JobCreateView(ExtraContextMixin, CreateView):
     model = Job
     form_class = _form_class
-    success_url = '../'+djobberbase_settings.DJOBBERBASE_VERIFY_URL+'/%(id)d/%(auth)s/'
 
-def job_detail(request, job_id, joburl):
-    ''' Displays an active job and its application form depending if 
-        the job has online applications or not. Handles the job applications
-        and sends notifications emails.
-    '''
-    try:        
-        job = Job.active.get(pk=job_id, joburl=joburl)
-        extra_context = {'page_type':'detail', 
-               'cv_extensions': djobberbase_settings.DJOBBERBASE_CV_EXTENSIONS,
-               'markup_lang': djobberbase_settings.DJOBBERBASE_MARKUP_LANGUAGE}
+    def get_success_url(self):
+        return reverse('djobberbase_job_verify', kwargs={"id": self.kwargs['job_id'], "auth": self.kwargs['auth']})
 
-        # Increment views
-        job.increment_view_count(request)
 
-        # Gets poster ip
-        ip = getIP(request)
+class JobDetail(ExtraContextMixin, DetailView):
+    extra_context = {'page_type': 'detail',
+                     'cv_extensions': djobberbase_settings.DJOBBERBASE_CV_EXTENSIONS,
+                     'markup_lang': djobberbase_settings.DJOBBERBASE_MARKUP_LANGUAGE}
 
-        # Only if the job has online applications ON and application 
+    template_name = 'djobberbase/job_detail.html'
+    form_class = ApplicationForm
+
+    def get_object(self, queryset=None):
+        ''' Displays an active job and its application form depending if
+            the job has online applications or not. Handles the job applications
+            and sends notifications emails.
+        '''
+        try:
+            job = Job.active.get(pk=self.kwargs['pk'])
+        except Job.DoesNotExist: # Instead of throwing a 404 error redirect to job unavailable page
+            return redirect('djobberbase_job_unavailable', permanent=True)
+
+        #job.increment_view_count(self.request)
+        ip = getIP(self.request)
+        # Only if the job has online applications ON and application
         # notifications are activated can the user apply online
         mb = minutes_between()
-        if job.apply_online and djobberbase_settings.\
-            DJOBBERBASE_APPLICATION_NOTIFICATIONS:
-
-            # Add CSRF protection
-            extra_context.update(csrf(request))
+        if job.apply_online and djobberbase_settings.DJOBBERBASE_APPLICATION_NOTIFICATIONS:
+            self.extra_context.update(csrf(self.request))
 
             # If it's a job application
-            if request.method == 'POST':
+            if self.request.method == 'POST':
 
                 # Gets the application
-                form = ApplicationForm(request.POST, 
-                                       request.FILES, 
-                                       applicant_data={'ip':ip, 'mb':mb})
+                form = ApplicationForm(self.request.POST,
+                                       self.request.FILES,
+                                       applicant_data={'ip': ip, 'mb': mb})
 
                 # If the form is OK then send it to the job poster
                 if form.is_valid():
-                    application_mail = MailApplyOnline(job, request)
+                    application_mail = MailApplyOnline(job, self.request)
                     application_mail.start()
 
-                    #Save JobStat application
-                    ja = JobStat(job=job, ip=ip, stat_type='A')
+                    # Save JobStat application
+                    ja = JobStat(job=job, ip=ip, stat_type=JobStat.APPLICATION)
                     ja.save()
-                    messages.add_message(request, 
-                                messages.INFO, 
-                                _('Your application was sent successfully.'))
-                    extra_context['page_type'] = 'application'
-                    queryset = Job.active.filter(joburl=joburl)
-                    return render_to_response('djobberbase/job_detail.html',
-                                       extra_context,
-                                       context_instance=RequestContext(request))
+                    messages.add_message(self.request,
+                                         messages.INFO,
+                                         _('Your application was sent successfully.'))
+                    self.extra_context['page_type'] = 'application'
+                    jobs = Job.active.filter(joburl=self.kwargs['joburl'])
+                    return jobs
                 else:
-                    extra_context['form_error'] = True 
-
-            # Else create an empty application form
+                    self.extra_context['form_error'] = True
             else:
-                form = ApplicationForm(applicant_data={'ip':ip, 'mb':mb})
-            extra_context['apform'] = form
-            extra_context['object'] = job
-            return render_to_response('djobberbase/job_detail.html',
-                                       extra_context,
-                                       context_instance=RequestContext(request))
+                form = ApplicationForm(applicant_data={'ip': ip, 'mb': mb})
+            self.extra_context['apform'] = form
+            self.extra_context['object'] = job
+            return job
 
         # Only display the job, without an application form
         else:
-            extra_context['object'] = job
-            return render_to_response('djobberbase/job_detail.html',
-                                       extra_context,
-                                       context_instance=RequestContext(request))
+            self.extra_context['object'] = job
+            return job
 
-    # Instead of throwing a 404 error redirect to job unavailable page 
-    except Job.DoesNotExist:
-        return redirect('djobberbase_job_unavailable', permanent=True)
 
-def job_verify(request, job_id, auth):
-    ''' A view to display a newly created job.
-    '''
-    queryset = Job.objects.filter(auth=auth)
-    # Setting page_type as 'verify' in order to 
-    # show edit and cancelation buttons in the template
-    extra_context = {'page_type':'verify', 
-               'markup_lang': djobberbase_settings.DJOBBERBASE_MARKUP_LANGUAGE}
-    return object_detail(request, queryset=queryset, 
-                            object_id=job_id, extra_context=extra_context)
+class JobVerify(DetailView):
+    slug_url_kwarg = 'auth'
+    slug_field = 'auth'
+    extra_context = {'page_type': 'verify',
+                     'markup_lang': djobberbase_settings.DJOBBERBASE_MARKUP_LANGUAGE}
 
-def jobs_category(request, cvar_name=None, tvar_name=None):
-    ''' Displays a job list by category and/or job type but
-        those two are optional.
-    '''
-    extra_context = {}
-    queryset = Job.active.all()
-    if cvar_name:
-        category = get_object_or_404(Category, var_name=cvar_name)
-        queryset = queryset.filter(category=category)
-        extra_context['selected_category'] = category
-    if tvar_name:
-        jobtype = get_object_or_404(Type, var_name=tvar_name)
-        queryset = queryset.filter(jobtype=jobtype)
-        extra_context['selected_jobtype'] = jobtype
-    return object_list(request, queryset=queryset,
-                    extra_context=extra_context,
-                    paginate_by=djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE)
 
-def jobs_in_city(request, city_name, tvar_name=None):
-    ''' Display a job list by city and job type (optional).
-    '''
-    city = get_object_or_404(City, ascii_name=city_name)
-    queryset = Job.active.filter(city=city)
-    extra_context = {'city': city}
-    if tvar_name:
-        jobtype = get_object_or_404(Type, var_name=tvar_name)
-        queryset = queryset.filter(jobtype=jobtype)
-        extra_context['selected_jobtype'] = jobtype                     
-    return object_list(request, queryset=queryset,
-                    extra_context=extra_context,
-                    paginate_by=djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE)
+class JobsCategory(ExtraContextMixin, ListView):
+    paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
 
-def jobs_in_other_cities(request):
-    ''' Displays a list with jobs in cities outside.
-    '''
-    queryset = Job.active.filter(city=None)
-    return object_list(request, queryset=queryset)
+    def get_queryset(self):
+        jobs = Job.active.all()
+        if self.kwargs.get('cvar_name', None):
+            category = get_object_or_404(Category, var_name=self.kwargs['cvar_name'])
+            queryset = jobs.filter(category=category)
+            self.extra_context['selected_category'] = category
+        if self.kwargs.get('tvar_name', None):
+            jobtype = get_object_or_404(Type, var_name=self.kwargs['tvar_name'])
+            jobs = queryset.filter(jobtype=jobtype)
+            self.extra_context['selected_jobtype'] = jobtype
+        return jobs
 
-def companies(request):
-    ''' Displays the companies that have active jobs
-        posted on the site.
-    '''
-    queryset = Job.active.values('company', 'company_slug') \
-               .annotate(Count('company'))
-    return object_list(request, queryset=queryset,
-                                template_name='djobberbase/company_list.html')
 
-def jobs_at(request, company_slug, tvar_name=None):
-    ''' Displays a job list by company, jobtype is optional.
-    '''
-    queryset = Job.active.filter(company_slug=company_slug)
-    if tvar_name:
-        jobtype = get_object_or_404(Type, var_name=tvar_name)
-        queryset = queryset.filter(jobtype=jobtype)
-        extra_context['selected_jobtype'] = jobtype    
-    return object_list(request, queryset=queryset)
+class JobsInCity(ExtraContextMixin, ListView):
+    paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
+
+    def get_queryset(self):
+        city = get_object_or_404(Place, ascii_name=self.kwargs['city_name'])
+        jobs = Job.active.filter(city=city)
+        self.extra_context = {'place': city}
+        if self.kwargs.get('tvar_name', None):
+            jobtype = get_object_or_404(Type, var_name=self.kwargs['tvar_name'])
+            jobs = jobs.filter(jobtype=jobtype)
+            self.extra_context['selected_jobtype'] = jobtype
+        return jobs
+
+
+class JobsOtherCities(ListView):
+    def get_queryset(self):
+        return Job.active.filter(city=None)
+
+
+class Companies(ListView):
+    template_name = 'djobberbase/company_list.html'
+
+    def get_queryset(self):
+        return Job.active.values('company', 'company_slug').annotate(Count('company'))
+
+
+class JobsAt(ExtraContextMixin, ListView):
+    model = Job
+    def get_queryset(self):
+        jobs = Job.active.filter(company_slug=self.kwargs['company_slug'])
+        if self.kwargs.get('tvar_name', None):
+            jobtype = get_object_or_404(Type, var_name=self.kwargs['company_slug'])
+            jobs = jobs.filter(jobtype=jobtype)
+            self.extra_context['selected_jobtype'] = jobtype
+        return jobs
+
 
 def job_confirm(request, job_id, auth):
     ''' A view to confirm a recently created job, if it has been published
@@ -205,7 +194,7 @@ def job_confirm(request, job_id, auth):
     if job.status not in (Job.ACTIVE, Job.TEMPORARY):
         raise Http404
     new_post = job.is_temporary()
-    requires_mod = not job.email_published_before() and \
+    requires_mod = not job.email_published_before and \
                  djobberbase_settings.DJOBBERBASE_ENABLE_NEW_POST_MODERATION
     if requires_mod:
         messages.add_message(request, 
@@ -231,71 +220,77 @@ def job_confirm(request, job_id, auth):
     return object_detail(request, queryset=queryset,
                          object_id=job_id,
                          extra_context={'page_type':'confirm'})
-                         
-def job_edit(request, job_id, auth):
-    ''' A view for editing published or unpublished job posts.
-    '''
-    job = get_object_or_404(Job, pk=job_id, auth=auth)
-    if job.status not in (Job.ACTIVE, Job.TEMPORARY):
-        raise Http404
-    return update_object(request, form_class=JobForm, object_id=job_id,
-           post_save_redirect='../../../'+
-           djobberbase_settings.DJOBBERBASE_VERIFY_URL+'/%(id)d/%(auth)s/')
 
-def job_activate(request, job_id, auth):
-    ''' Gets a job and activates it, only if it's not already activated,
-        it also sends the notification mail to the poster.
-    '''
-    job = get_object_or_404(Job, pk=job_id, auth=auth)
-    extra_context={}
-    if not job.is_active():
-        job.activate()
-        if djobberbase_settings.DJOBBERBASE_POSTER_NOTIFICATIONS:
-            publish_email = MailPublishToUser(job, request)
-            publish_email.start()
-        messages.add_message(request, 
-                             messages.INFO, 
-                             _('Your job has been activated.'))
-        extra_context['page_type'] = 'activate'
-    queryset=Job.active.all()
-    return object_detail(request, queryset=queryset, 
-                            object_id=job_id, extra_context=extra_context)
 
-def job_deactivate(request, job_id, auth):
-    ''' Deactivates a job and shows an active jobs list.    
-    '''
-    job = get_object_or_404(Job, pk=job_id, auth=auth)
-    extra_context={}
-    if job.is_active() or job.is_temporary():
-        job.deactivate()
-        messages.add_message(request, 
-                             messages.INFO, 
-                             _('Your job has been deactivated.'))
-        extra_context['page_type'] = 'deactivate'
-    queryset=Job.active.all()
-    return object_list(request, queryset=queryset,
-                    extra_context=extra_context,
-                    paginate_by=djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE)
+class GenericJobUpdateView(ExtraContextMixin, UpdateView):
+    model = Job
 
-def job_search(request):
-    ''' A search view, does the job but not great. Job searches should be
-        handled by a proper search app, namely django-haystack.
-    '''
-    query_string = ''
-    found_entries = Job.objects.none()
-    extra_context = {'keywords': ' '}
-    if ('keywords' in request.POST) and request.POST['keywords'].strip():
-        request.session['keywords'] = request.POST['keywords']
-        query_string = request.session['keywords']
-        extra_context['keywords'] = query_string
-        search_fields = ['title', 'description', 'category',
-                             'jobtype', 'city', 'outside_location', 'company',]
-        entry_query = get_query(query_string, search_fields)
-        jobs_per_search = djobberbase_settings.DJOBBERBASE_JOBS_PER_SEARCH
-        found_entries = Job.objects.filter(entry_query)\
-                                     .order_by('-created_on')[:jobs_per_search]
-        search = JobSearch(keywords=query_string)
-        search.save()
-    return object_list(request, queryset=found_entries,
-                    extra_context=extra_context,
-                    paginate_by=djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE)
+    def get_object(self, queryset=None):
+        return get_object_or_404(Job, pk=self.kwargs['job_id'], auth=self.kwargs['auth'])
+
+
+class JobUpdateView(GenericJobUpdateView):
+    form_class = JobForm
+
+    def get_success_url(self):
+        return '../../../{}/%(id)d/%(auth)s/'.format(djobberbase_settings.DJOBBERBASE_VERIFY_URL)
+
+    def get_object(self, queryset=None):
+        job = super().get_object(queryset=queryset)
+        if not job.is_active and not job.is_temporary:
+            raise Http404
+        return job
+
+
+class JobActivate(GenericJobUpdateView):
+    def get_object(self, queryset=None):
+        ''' Gets a job and activates it, only if it's not already activated,
+            it also sends the notification mail to the poster.
+        '''
+        job = super().get_object(queryset=queryset)
+        if not job.is_active:
+            job.activate()
+            if djobberbase_settings.DJOBBERBASE_POSTER_NOTIFICATIONS:
+                publish_email = MailPublishToUser(job, self.request)
+                publish_email.start()
+            messages.add_message(self.request, messages.INFO,
+                                 _('Your job has been activated.'))
+            self.extra_context['page_type'] = 'activate'
+        return job
+
+
+class JobDeactivate(GenericJobUpdateView):
+
+    def get_success_url(self):
+        return redirect('')
+
+    def get_object(self, queryset=None):
+        ''' Deactivates a job and shows an active jobs list.
+        '''
+        job = super().get_object(queryset=queryset)
+        if job.is_active or job.is_temporary:
+            job.deactivate()
+            messages.add_message(self.request,
+                                 messages.INFO,
+                                 _('Your job has been deactivated.'))
+            self.extra_context['page_type'] = 'deactivate'
+        return job
+
+
+class JobSearchView(ExtraContextMixin, ListView):
+    paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
+
+    def get_queryset(self):
+        found_entries = Job.objects.none()
+        self.extra_context = {'keywords': ' '}
+        if ('keywords' in self.request.GET) and self.request.GET['keywords'].strip():
+            self.request.session['keywords'] = self.request.GET['keywords']
+            query_string = self.request.session['keywords']
+            self.extra_context['keywords'] = query_string
+            entry_query = get_query(query_string, search_fields=['title', 'description', 'category',
+                             'jobtype', 'place', 'outside_location', 'company', ])
+            found_entries = Job.objects.filter(entry_query) \
+                                .order_by('-created_on')[:djobberbase_settings.DJOBBERBASE_JOBS_PER_SEARCH]
+            search = JobSearch(keywords=query_string)
+            search.save()
+        return found_entries

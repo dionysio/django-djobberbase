@@ -1,20 +1,20 @@
 {% extends "djobberbase/base.html" %}
-
+{% load i18n %}
 {% block content %}
 
 <div id="job-listings"></div><!-- #job-listings --> 
 			<div class="steps"> 
 				<div id="step-1" class="step-active"> 
-					Step 1: Write
+					{% trans 'Step 1: Write' %}
 				</div> 
 				<div id="step-2"> 
-					Step 2: Verify
+					{% trans 'Step 2: Verify' %}
 				</div> 
 				<div id="step-3"> 
-					Step 3: Confirm
+					{% trans 'Step 3: Confirm' %}
 				</div> 
 				<div class="clear"></div> 
-			</div> 
+			</div>
 			<br /> 
 						
 			<form id="publish_form" method="post" action="">
@@ -33,15 +33,15 @@
 							</td> 
 						</tr> 
 						<tr> 
-							<td class="publish-label" valign="top">Title:</td> 
+							<td class="publish-label" valign="top">{% trans 'Title' %}:</td>
 							<td>
                                 {{ form.title.errors }} 
 								{{ form.title }} 
-								<div class="e.g. 'PHP Developer', 'UI designer'"></div> 
+								<div class=""></div>
 							</td> 
 						</tr> 
 						<tr> 
-							<td valign="top">Location:</td> 
+							<td valign="top">{% trans 'Location' %}:</td>
 							<td>
 
                                 {{ form.city }}
@@ -55,7 +55,7 @@
 									<option value="4" >Tokyo</option> 
 								</select> 
                                 -->
-								<a id="other_location_label" href="#" onclick="Jobber.HandleLocationOutsideRo(); return false;">other</a> 
+								<a id="other_location_label" href="#" onclick="Jobber.HandleLocationOutsideRo(); return false;">{% trans 'other' %}</a>
 								<div id="location_outside_ro" style="display: none;"> 
 									where ? 
                                     <!--    
@@ -63,116 +63,116 @@
                                     -->
 
                                     {{ form.outside_location }}
-									<div class="suggestion">e.g. 'London, UK'</div> 
+									<div class="suggestion">{% trans 'e.g. "London, UK"'%}</div>
 								</div> 
 							</td> 
 						</tr> 
 						<tr> 
-							<td valign="top">Description:</td> 
+							<td valign="top">{% trans 'Description' %}:</td>
 							<td>
 
                                <!-- <textarea  tabindex="4" name="description" id="description" cols="80" rows="15"></textarea> -->
                                 {{ form.description.errors }}
                                 {{ form.description }}
 																<div class="suggestion"> 
-									<a target="_blank" href="http://www.textism.com/tools/textile/" onclick="$('#textile-suggestions').toggle(); return false;">Format text with Textile</a></div> 
+									<a target="_blank" href="http://www.textism.com/tools/textile/" onclick="$('#textile-suggestions').toggle(); return false;">{% trans 'Format text with Textile' %}</a></div>
 								<div id="textile-suggestions" style="display: none;"> 
 									<table> 
 											<thead> 
 											<tr class="odd"> 
-												<th>Textile syntax</th> 
-												<th>Final result</th> 
+												<th>{% trans 'Textile syntax' %}</th>
+												<th>{% trans 'Final result' %}</th>
 											</tr> 
 											</thead> 
 											<tbody> 
 											<tr class="even"> 
-												<td>That is _incredible_</td> 
-												<td>That is <em>incredible</em></td> 
- 
-											</tr> 
-											<tr class="odd"> 
-												<td>*Indeed* it is</td> 
-												<td><strong>Indeed</strong> it is</td> 
-											</tr> 
-											<tr class="even"> 
-												<td>"Wikipedia":http://www.wikipedia.org</td> 
- 
-												<td><a href="http://www.wikipedia.org">Wikipedia</a></td> 
-											</tr> 
-											<tr class="odd"> 
-												<td>* apples<br />* oranges<br />* pears</td> 
-												<td> 
- 
-													<ul> 
-														<li>apples</li> 
-														<li>oranges</li> 
-														<li>pears</li> 
-													</ul> 
-												</td> 
-											</tr> 
- 
-											<tr class="even"> 
-												<td># first<br /># second<br /># third</td> 
-												<td> 
-													<ol> 
-														<li>first</li> 
-														<li>second</li> 
-														<li>third</li> 
-													</ol> 
-												</td> 
-											</tr> 
-											</tbody> 
-										</table> 
-								</div><!-- #textile-suggestions --> 
-							</td> 
-						</tr> 
-					</table> 
-				</fieldset> 
-				<fieldset> 
-					<legend>Hiring company or person</legend> 
-					<table border="0" cellspacing="2" cellpadding="2"> 
-						<tr> 
-							<td class="publish-label">Name:</td> 
+												<td>{% trans 'That is _incredible_' %}</td>
+												<td>{% blocktrans %}That is <em>incredible</em>{% endblocktrans %}</td>
+
+											</tr>
+											<tr class="odd">
+												<td>{% trans '*Indeed* it is' %}</td>
+												<td>{% blocktrans %}<strong>Indeed</strong> it is{% endblocktrans %}</td>
+											</tr>
+											<tr class="even">
+												<td>{% trans '"Wikipedia":http://www.wikipedia.org' %}</td>
+
+												<td><a href="http://www.wikipedia.org">Wikipedia</a></td>
+											</tr>
+											<tr class="odd">
+												<td>{% blocktrans %}* apples<br />* oranges<br />* pears{% endblocktrans %}</td>
+												<td>
+
+													<ul>
+														<li>{% trans 'apples' %}</li>
+														<li>{% trans 'oranges' %}</li>
+														<li>{% trans 'pears' %}</li>
+													</ul>
+												</td>
+											</tr>
+
+											<tr class="even">
+												<td>{% blocktrans %}# first<br /># second<br /># third{% endblocktrans %}</td>
+												<td>
+													<ol>
+														<li>{% trans 'first' %}</li>
+														<li>{% trans 'second' %}</li>
+														<li>{% trans 'third' %}</li>
+													</ol>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+								</div><!-- #textile-suggestions -->
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<fieldset>
+					<legend>{% trans 'Hiring company or person' %}</legend>
+					<table border="0" cellspacing="2" cellpadding="2">
+						<tr>
+							<td class="publish-label">{% trans 'Name' %}:</td>
 							<td>
                             {{ form.company.errors }}
                             {{ form.company }}
                             <!-- <input  tabindex="6" type="text" name="company" id="company" size="40" value="" />  -->
-							<span class="validation-error"></span> 
-							</td> 
-						</tr> 
-						<tr> 
-							<td valign="top">Website:</td> 
+							<span class="validation-error"></span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">{% trans 'Website' %}:</td>
 							<td>http://
                             {{ form.url.errors }}
                             {{ form.url }}
-								<div class="suggestion"></div> 
-							</td> 
-						</tr> 
-						<tr> 
-							<td class="publish-label">E-mail<br /><strong>(not published)</strong>:</td> 
-							<td> 
+								<div class="suggestion"></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="publish-label">{% blocktrans %}E-mail<br /><strong>(not published)</strong>{% endblocktrans %}:</td>
+							<td>
                             {{ form.poster_email.errors }}
                             {{ form.poster_email }}
-								<span class="validation-error"></span> 
-								<div class="suggestion"> 
-									Online applications will be sent to this address.
-								</div> 
-							</td> 
+								<span class="validation-error"></span>
+								<div class="suggestion">
+									{% trans 'Online applications will be sent to this address.' %}
+								</div>
+							</td>
 						</tr>
                         {% if form.captcha %}
-						<tr> 
-							<td class="publish-label">Captcha:</td> 
-							<td> 
+						<tr>
+							<td class="publish-label">{% trans 'Captcha' %}:</td>
+							<td>
                             {{ form.captcha.errors }}
                             {{ form.captcha }}
-							</td> 
+							</td>
 						</tr>
                         {% endif %}
-					</table> 
-				</fieldset> 
+					</table>
+				</fieldset>
 								<fieldset>{{ form.apply_online }}
 <!-- <input type="checkbox" name="apply_online" id="apply_online" class="no-border" checked="checked" /> -->
-<label for="apply_online"><strong>Allow Online Applications</strong> (If you are unchecking it, then add a description on how to apply online above)</label></fieldset> 
+<label for="apply_online">{% blocktrans %}<strong>Allow Online Applications</strong> (If you are unchecking it, then add a description on how to apply online above){% endblocktrans %}</label></fieldset>
 				<fieldset><input type="submit" name="submit" id="submit" value="Step 2: Verify ad" /></fieldset> 
 				<fieldset class="hidden">					
 					<input type="hidden" name="action" value="publish" /> 

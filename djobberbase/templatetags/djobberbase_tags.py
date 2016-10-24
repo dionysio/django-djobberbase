@@ -19,7 +19,7 @@ class LatestJobsNode(template.Node):
         self.varname = varname
 
     def render(self, context):
-        context[self.varname] = Job.active.all().order_by('-created_on')[:self.num]
+        context[self.varname] = Job.active.all().select_related('category', 'jobtype', 'place').order_by('-created_on')[:self.num]
         return ''
 
 # spotlight jobs template tag
@@ -35,7 +35,7 @@ class SpotlightJobsNode(template.Node):
         self.varname = varname
 
     def render(self, context):
-        context[self.varname] = Job.active.filter(spotlight=True).order_by('-created_on')[:self.num]
+        context[self.varname] = Job.active.filter(spotlight=True).select_related('category', 'jobtype', 'place').order_by('-created_on')[:self.num]
         return ''
 
 #most applied jobs template tag
@@ -74,7 +74,7 @@ def do_jobtypes(parser, token):
 
 class JobtypesNode(template.Node):
     def render(self, context):
-        context['jobtypes'] = Type.objects.all()
+        context['jobtypes'] = Type.objects.all().prefetch_related('jobs')
         return ''
 
 NOFOLLOW_RE = re.compile(u'<a (?![^>]*rel=["\']nofollow[\'"])' \

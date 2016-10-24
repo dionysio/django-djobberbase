@@ -2,10 +2,10 @@
 
 import re
 import os
-from django.conf import settings
-from django.shortcuts import redirect
-from django.db.models import Q
 from datetime import datetime, timedelta
+
+from django.db.models import Q
+
 from djobberbase.conf import settings as djobberbase_settings
 
 def normalize_query(query_string,
@@ -21,6 +21,7 @@ def normalize_query(query_string,
     '''
     return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
 
+
 def get_query(query_string, search_fields):
     ''' Returns a query, that is a combination of Q objects. That combination
         aims to search keywords within a model by testing the given search fields.
@@ -31,7 +32,7 @@ def get_query(query_string, search_fields):
     for term in terms:
         or_query = None # Query to search for a given term in each field
         for field_name in search_fields:
-            if field_name == 'category' or field_name == 'jobtype' or field_name == 'city':
+            if field_name == 'category' or field_name == 'jobtype' or field_name == 'place':
                 q = Q(**{"%s__name__icontains" % field_name: term})
             else:
                 q = Q(**{"%s__icontains" % field_name: term})
@@ -45,29 +46,32 @@ def get_query(query_string, search_fields):
             query = query & or_query
     return query
 
+
 def handle_uploaded_file(f, name):
     file_uploads = djobberbase_settings.DJOBBERBASE_FILE_UPLOADS
-    destination = open(file_uploads + name, 'wb+')
-    for chunk in f.chunks():
-        destination.write(chunk)
-    destination.close()
+    with open(file_uploads + name, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
 
 def delete_uploaded_file(name):
     os.remove(name)
 
+
 def minutes_between():
-    minutes = djobberbase_settings.DJOBBERBASE_MINUTES_BETWEEN
-    start = datetime.now() - timedelta(minutes=minutes)
     end = datetime.now()
+    start = end - timedelta(minutes=djobberbase_settings.DJOBBERBASE_MINUTES_BETWEEN)
     return (start, end)
-    
+
+
 def last_hour():
     start = datetime.now() - timedelta(hours=1)
     end = datetime.now()
     return (start, end)
-	
+
+
 def getIP(request):
-    ip = request.META['REMOTE_ADDR']    
-    if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip = request.META['HTTP_X_FORWARDED_FOR']
+    ip = request.META['REMOTE_ADDR']
+    if (not ip or ip == '127.0.0.1'):
+        ip = request.META.get('HTTP_X_FORWARDED_FOR', '')
     return ip
