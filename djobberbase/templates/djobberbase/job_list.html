@@ -9,12 +9,12 @@
 
         {% get_spotlight_jobs 5 as spotlight_jobs %}
             {% if spotlight_jobs %}
-                {% include 'djobberbase/render_jobs.html' with jobs=spotlight_jobs jobs_title='Spotlight Jobs' %}
+                {% include 'djobberbase/partials/render_jobs.html' with jobs=spotlight_jobs jobs_title='Spotlight Jobs' %}
             {% endif %}
 
         {% get_latest_jobs 10 as latest_jobs %}
             {% if latest_jobs %}
-                {% include 'djobberbase/render_jobs.html' with jobs=latest_jobs jobs_title='Most recent job offers' %}
+                {% include 'djobberbase/partials/render_jobs.html' with jobs=latest_jobs jobs_title='Most recent job offers' %}
 
                 {% if latest_jobs.count > 0 %}
                 <div id="view_all">
@@ -30,22 +30,22 @@
             {% trans 'Only display' %}&nbsp;
             {% get_jobtypes %}
             {% for jobtype in jobtypes %}
-                <a href="{% url 'djobberbase:job_list_all' categories=selected_category.var_name tvar_name=jobtype.var_name %}" title="{{jobtype}}">
+                <a href="{% url 'djobberbase:job_list_all' categories=selected_category.slug jobtype=jobtype.slug %}" title="{{jobtype}}">
                     <img src="{% static 'img/icon-{{jobtype.var_name}}.png' %}" alt="{{jobtype}}">
                 </a>
             {% endfor %}
             </div>
-            <h2>Jobs for {{ selected_category }} </h2>
+            <h2>{% trans 'Jobs in' %} {{ selected_category }} </h2>
         {% else %}
             {% if keywords %}
-                <h2>{{ object_list|length }} {% trans 'Search results found for:' %} '{{ keywords }}'</h2>
+                <h2>{{ length }} {% trans 'Search results found for:' %} '{{ keywords }}'</h2>
             {% else %}
                 <h2>{% trans 'All jobs' %}</h2>
             {% endif %}
         {% endif %}
-        {% include 'djobberbase/render_jobs.html' with jobs=object_list jobs_title='' %}
+        {% include 'djobberbase/partials/render_jobs.html' with jobs=object_list jobs_title='' %}
 
-        {% comment %}{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}{% endcomment %}
+        {% if is_paginated %}{% load bootstrap_pagination %}{% bootstrap_paginate page_obj range=10 %}{% endif %}
 
     {% endif %}
 

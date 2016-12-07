@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import get_object_or_404, redirect
-from djobberbase.models import Job, Category, Type, JobStat, JobSearch, Place
+from djobberbase.models import Job, Category, Type, JobStat, JobSearch, Place, Company
 from django.template.context_processors import csrf
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from djobberbase.helpers import *
-from djobberbase.forms import ApplicationForm
+from djobberbase.forms import ApplicationForm, SearchForm
 from django.db.models import Count
 from django.http import Http404
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
+
 
 if djobberbase_settings.DJOBBERBASE_CAPTCHA_POST == 'simple':
     from djobberbase.forms import CaptchaJobForm
@@ -35,13 +39,16 @@ class ExtraContextMixin:
 class GenericJobListView(ExtraContextMixin, ListView):
     model = Job
     paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
-
+    extra_context = {"search_form": SearchForm(), "MEDIA_URL": settings.MEDIA_URL}
 
     def get_queryset(self):
         if self.kwargs.get('categories'):
             categories = self.kwargs['categories'].split('/')
+            jobs = Job.active.filter(categories)
         else:
-            jobs = Job.active.all().select_related('category', 'jobtype', 'place')
+            jobs = Job.active.all().select_related('category', 'jobtype', 'place', 'company')
+
+
         return jobs
 
 class JobListView(GenericJobListView):
@@ -136,17 +143,23 @@ class JobsCategory(ExtraContextMixin, ListView):
     paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
 
     def get_queryset(self):
-        jobs = Job.active.all()
-        if self.kwargs.get('cvar_name', None):
-            category = get_object_or_404(Category, var_name=self.kwargs['cvar_name'])
+        jobs = Job.active.select_related('category', 'jobtype', 'place', 'company', 'company__admin')
+        if self.kwargs.get('slug', None):
+            category = get_object_or_404(Category, slug=self.kwargs['slug'])
             queryset = jobs.filter(category=category)
             self.extra_context['selected_category'] = category
-        if self.kwargs.get('tvar_name', None):
-            jobtype = get_object_or_404(Type, var_name=self.kwargs['tvar_name'])
+        if self.kwargs.get('job_type', None):
+            jobtype = get_object_or_404(Type, slug=self.kwargs['job_type'])
             jobs = queryset.filter(jobtype=jobtype)
             self.extra_context['selected_jobtype'] = jobtype
         return jobs
 
+class JobsCompany(ExtraContextMixin, ListView):
+    paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
+
+    def get_queryset(self):
+        company = get_object_or_404(Company, admin__username=self.kwargs['company'])
+        return company.jobs.select_related('category', 'jobtype', 'place', 'company', 'company__admin')
 
 class JobsInCity(ExtraContextMixin, ListView):
     paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
@@ -277,20 +290,25 @@ class JobDeactivate(GenericJobUpdateView):
         return job
 
 
-class JobSearchView(ExtraContextMixin, ListView):
-    paginate_by = djobberbase_settings.DJOBBERBASE_JOBS_PER_PAGE
+class JobSearchView(GenericJobListView):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_queryset(self):
         found_entries = Job.objects.none()
         self.extra_context = {'keywords': ' '}
         if ('keywords' in self.request.GET) and self.request.GET['keywords'].strip():
-            self.request.session['keywords'] = self.request.GET['keywords']
-            query_string = self.request.session['keywords']
+            query_string = self.request.GET['keywords']
+            place = self.request.GET.get('place', '')
             self.extra_context['keywords'] = query_string
             entry_query = get_query(query_string, search_fields=['title', 'description', 'category',
-                             'jobtype', 'place', 'outside_location', 'company', ])
-            found_entries = Job.objects.filter(entry_query) \
-                                .order_by('-created_on')[:djobberbase_settings.DJOBBERBASE_JOBS_PER_SEARCH]
-            search = JobSearch(keywords=query_string)
-            search.save()
+                             'jobtype', ])
+            found_entries = Job.objects.filter(entry_query)
+            if place:
+                found_entries.filter(place__name=place)
+            found_entries = found_entries.select_related('category', 'jobtype', 'place', 'company', 'company__admin').order_by('-created_on')[:djobberbase_settings.DJOBBERBASE_JOBS_PER_SEARCH]
+            #self.extra_context['length'] = found_entries.count()
+            #JobSearch.objects.create(keywords=query_string)
         return found_entries

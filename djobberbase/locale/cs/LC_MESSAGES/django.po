@@ -1,242 +1,555 @@
-# -*- coding: utf-8 -*-
-# Djobberbase czech translation file.
-# Copyright (C) 2016 Dionyz Lazar
-# This file is distributed under the same license as the django-djobberbase package.
-# Dionyz Lazar <contact@dionysio.com>, 2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-10 02:43-0500\n"
-"PO-Revision-Date: 2016-10-05 19:22+0200\n"
-"Last-Translator: Dionyz Lazar <contact@dionysio.com>\n"
+"POT-Creation-Date: 2016-11-18 23:14+0100\n"
+"PO-Revision-Date: 2016-12-07 13:30+0058\n"
+"Last-Translator: b'  <>'\n"
+"Language-Team: Czech\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"Language-Team: \n"
-"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Loco-Source-Locale: en_GB\n"
+"X-Translated-Using: django-rosetta 0.7.12\n"
 
-#: admin.py:9
+#: djobberbase/conf/settings.py:48
+#, python-format
+msgid "[ %(site_name)s  ] New job: %(job_title)s"
+msgstr "[ %(site_name)s  ] Nová pracovní pozice: %(job_title)s"
+
+#: djobberbase/conf/settings.py:52
+#, python-format
+msgid "[ %(site_name)s  ] Edited job: %(job_title)s"
+msgstr "[ %(site_name)s  ] Upravovaná pracovni pozice: %(job_title)s"
+
+#: djobberbase/conf/settings.py:56
+#, python-format
+msgid "Your ad on %(site_name)s"
+msgstr "Vaše reklama na %(site_name)s"
+
+#: djobberbase/conf/settings.py:64
+#, python-format
+msgid "[ %(site_name)s ] I wish to apply for %(job_title)s"
+msgstr "Hlásím se o pozici"
+
+#: djobberbase/forms.py:97
+msgid "What kind of job?"
+msgstr "Jaká práce?"
+
+#: djobberbase/forms.py:98
+msgid "Where?"
+msgstr "Kde?"
+
+#: djobberbase/management/commands/cleanup_invalid_jobs.py:13
+msgid "Cleans up old jobs which are past their validity date."
+msgstr "Odstranení starých pracovních míst, které jsou po datu platnosti."
+
+#: djobberbase/management/commands/cleanup_invalid_jobs.py:23
+msgid "This action will mark {} jobs as inactive. Do you agree? y/n"
+msgstr "Tato akce označí pracovní pozice {} jako deaktivované. Souhlasíte?"
+
+#: djobberbase/models.py:149
+msgid "Continent"
+msgstr "Kontinent"
+
+#: djobberbase/models.py:150
+msgid "Region"
+msgstr "Región"
+
+#: djobberbase/models.py:151
+msgid "Country"
+msgstr "Stát"
+
+#: djobberbase/models.py:153
+msgid "County"
+msgstr "Kraj"
+
+#: djobberbase/models.py:154
+msgid "City"
+msgstr "Město"
+
+#: djobberbase/models.py:155
+msgid "Street"
+msgstr "Ulice"
+
+#: djobberbase/models.py:184
+msgid "Place cannot be of this type. It needs to be one of: "
+msgstr "Lokalita nemůže mít tento typ. Musí to být jeden z následujících:"
+
+#: djobberbase/models.py:249
+msgid "Languages"
+msgstr "Jazyky"
+
+#: djobberbase/models.py:250
+msgid "Language"
+msgstr "Jazyk"
+
+#: djobberbase/models.py:266
+msgid "Salary range minimum"
+msgstr "Minimální mzda"
+
+#: djobberbase/models.py:269
+msgid "External job URL"
+msgstr "URL adresa pracovní pozice"
+
+#: djobberbase/models.py:274
+msgid "Valid until"
+msgstr "Platnost"
+
+#: djobberbase/models.py:275
+msgid "You can hide the posting from others by unchecking this option."
+msgstr "Můžete skrýt tuto pozici od ostatních zatržením této volby."
+
+#: djobberbase/models.py:313
+msgid "Job posting end date is in the past. "
+msgstr "Zvolené datum pracovní pozice je v minulosti."
+
+#: djobberbase/models.py:319
+msgid ""
+"Similar active job posting from your company already exists. You need to "
+"change the title of your posting or deactivate the original one. The "
+"original is available over here: "
+msgstr ""
+"V databázi je podobná pozice jako tato zadaná. Je nutno změnit název pozice "
+"nebo smazat původní, která je dostupná na adrese:"
+
+#: djobberbase/models.py:377
+msgid "Job application for [{}]{} from IP: {}"
+msgstr "Zájem o pracovní pozici [{}]{} z IP adresy: {}"
+
+#: djobberbase/models.py:379
+msgid "Visit for [{}]{} from IP: {}"
+msgstr "Návštěva pro [{}]{} z IP adresy: {}"
+
+#: djobberbase/models.py:381
+msgid "Spam report for [{}]{} from IP: {}"
+msgstr "Nahlášení spamu pro [{}]{} z IP adresy: {}"
+
+#: djobberbase/models.py:383
+msgid "Unkwown stat"
+msgstr "Neznámá typ záznamu"
+
+#: djobberbase/templates/djobberbase/emails/publish_to_user.html:3
+#: djobberbase/templates/djobberbase/emails/publish_to_user.txt:3
+msgid "Hello"
+msgstr "Ahoj"
+
+#: djobberbase/templates/djobberbase/emails/publish_to_user.html:4
+#: djobberbase/templates/djobberbase/emails/publish_to_user.txt:4
+msgid "Your ad was published and is available at"
+msgstr "Vaše reklama byla zveřejněna a je k dispozici na adrese"
+
+#: djobberbase/templates/djobberbase/emails/publish_to_user.html:5
+#: djobberbase/templates/djobberbase/emails/publish_to_user.txt:5
+msgid "Edit it"
+msgstr "Uprav"
+
+#: djobberbase/templates/djobberbase/emails/publish_to_user.html:7
+#: djobberbase/templates/djobberbase/emails/publish_to_user.txt:7
+msgid "Thank you for using our service!"
+msgstr "Děkujeme, že využíváte naši službu!"
+
+#: djobberbase/templates/djobberbase/job_detail.html:9
+msgid ""
+"Your job was posted, but since this is the first time you post with this "
+"e-mail address, we need to manually verify it. \\nThank you for your "
+"patience, as the ad should be published ASAP. We'll send you an e-mail when "
+"that happens. \\nFrom now on, every ad you post with this e-mail address "
+"will instantly be published."
+msgstr ""
+"Vaše pracovní pozice byla přidána, no protože použiváte tuto e-mailovou "
+"adresou adresou poprvé, musíme jí ručně ověřit. \\ Nděkujeme za vaši "
+"trpělivost, protože reklama by měla být zveřejněna co nejdříve. Pošleme vám "
+"e-mail, když se to stane. \\ NFrom chvíle, v každém inzerátu účtujete s "
+"touto e-mailovou adresu bude okamžitě zveřejněna."
+
+#: djobberbase/templates/djobberbase/job_detail.html:21
+msgid "Full-time"
+msgstr "Plný pracovní úvazek"
+
+#: djobberbase/templates/djobberbase/job_form.html:8
+msgid "Step 1: Write"
+msgstr ""
+
+#: djobberbase/templates/djobberbase/job_form.html:11
+msgid "Step 2: Verify"
+msgstr ""
+
+#: djobberbase/templates/djobberbase/job_form.html:14
+msgid "Step 3: Confirm"
+msgstr ""
+
+#: djobberbase/templates/djobberbase/job_form.html:58
+msgid "other"
+msgstr "ostatní"
+
+#: djobberbase/templates/djobberbase/job_form.html:66
+msgid "e.g. \"London, UK\""
+msgstr "např. Brno"
+
+#: djobberbase/templates/djobberbase/job_form.html:78
+msgid "Format text with Textile"
+msgstr "Formátujte text s Textile"
+
+#: djobberbase/templates/djobberbase/job_form.html:83
+msgid "Textile syntax"
+msgstr "Syntax Textile"
+
+#: djobberbase/templates/djobberbase/job_form.html:84
+msgid "Final result"
+msgstr "Finální výsledek"
+
+#: djobberbase/templates/djobberbase/job_form.html:89
+msgid "That is _incredible_"
+msgstr "To je _úžasné_"
+
+#: djobberbase/templates/djobberbase/job_form.html:90
+msgid "That is <em>incredible</em>"
+msgstr "That is <em>incredible<-em>"
+
+#: djobberbase/templates/djobberbase/job_form.html:94
+msgid "*Indeed* it is"
+msgstr "Je to *tak*"
+
+#: djobberbase/templates/djobberbase/job_form.html:95
+msgid "<strong>Indeed</strong> it is"
+msgstr "Je to <strong>tak</strong>"
+
+#: djobberbase/templates/djobberbase/job_form.html:98
+msgid "\"Wikipedia\":http://www.wikipedia.org"
+msgstr ""
+
+#: djobberbase/templates/djobberbase/job_form.html:103
+msgid "* apples<br />* oranges<br />* pears"
+msgstr "* Jablka <br /> * pomeranče <br /> * hrušky"
+
+#: djobberbase/templates/djobberbase/job_form.html:107
+msgid "apples"
+msgstr "jablka"
+
+#: djobberbase/templates/djobberbase/job_form.html:108
+msgid "oranges"
+msgstr "pomeranče"
+
+#: djobberbase/templates/djobberbase/job_form.html:109
+msgid "pears"
+msgstr "hrušky"
+
+#: djobberbase/templates/djobberbase/job_form.html:115
+msgid "# first<br /># second<br /># third"
+msgstr "# První <br /> <br /> # druhý # třetí"
+
+#: djobberbase/templates/djobberbase/job_form.html:118
+msgid "first"
+msgstr "první"
+
+#: djobberbase/templates/djobberbase/job_form.html:119
+msgid "second"
+msgstr "druhý"
+
+#: djobberbase/templates/djobberbase/job_form.html:120
+msgid "third"
+msgstr "třetí"
+
+#: djobberbase/templates/djobberbase/job_form.html:132
+msgid "Hiring company or person"
+msgstr "Kontaktní osoba"
+
+#: djobberbase/templates/djobberbase/job_form.html:144
+msgid "Website"
+msgstr "Webová stránka"
+
+#: djobberbase/templates/djobberbase/job_form.html:152
+msgid "E-mail<br /><strong>(not published)</strong>"
+msgstr "E-mailová adresa <br /> <strong> (nebude zveřejněna) </ strong>"
+
+#: djobberbase/templates/djobberbase/job_form.html:164
+msgid "Captcha"
+msgstr ""
+
+#: djobberbase/templates/djobberbase/job_list.html:21
+msgid "View all"
+msgstr "Ukázat všechny"
+
+#: djobberbase/templates/djobberbase/job_list.html:30
+msgid "Only display"
+msgstr "Filtrovat"
+
+#: djobberbase/templates/djobberbase/job_list.html:41
+msgid "Search results found for:"
+msgstr "Výsledky vyhledáváni pro\""
+
+#: djobberbase/templates/djobberbase/job_list.html:43
+msgid "All jobs"
+msgstr "Všechny pracovní pozice"
+
+#: djobberbase/templates/djobberbase/partials/render_jobs.html:15
+msgid "at"
+msgstr "v"
+
+#: djobberbase/templates/djobberbase/partials/render_jobs.html:16
+msgid "in"
+msgstr "v"
+
+#: djobberbase/templates/djobberbase/unavailable.html:9
+msgid "There are currently no available jobs for"
+msgstr "Momentálně nejsou k dispozici žádné pracovní místa"
+
+#: djobberbase/templates/djobberbase/unavailable.html:11
+msgid "Post a new job"
+msgstr "Přidání nového zaměstnání"
+
+#: djobberbase/models.py:128
+#, fuzzy
+msgid "Job type"
+msgstr "Typ pracovní pozice"
+
+#: djobberbase/models.py:129
+msgid "Job types"
+msgstr "Typy pracovních pozic"
+
+#: djobberbase/models.py:152
+#, fuzzy
+msgid "State"
+msgstr "Statistiky pracovní pozice"
+
+#: djobberbase/models.py:162
+#, fuzzy
+msgid "Place Type"
+msgstr "Město"
+
+#: djobberbase/models.py:170
+#, fuzzy
+msgid "Places"
+msgstr "Město"
+
+#: djobberbase/models.py:213
+#, fuzzy
+msgid "Company admin"
+msgstr "Informace o společnosti"
+
+#: djobberbase/models.py:214
+#, fuzzy
+msgid "Company logo"
+msgstr "Informace o společnosti"
+
+#: djobberbase/models.py:220
+#, fuzzy
+msgid "Companies"
+msgstr "Společnost"
+
+#: djobberbase/models.py:235 djobberbase/models.py:236
+#, fuzzy
+msgid "Education"
+msgstr "Žádost"
+
+#: djobberbase/models.py:268
+#, fuzzy
+msgid "Description in HTML"
+msgstr "Popis"
+
+#: djobberbase/templates/djobberbase/emails/publish_to_user.html:6
+#: djobberbase/templates/djobberbase/emails/publish_to_user.txt:6
+#, fuzzy
+msgid "Deactivate it"
+msgstr "Deaktivovat vybrané pracovní pozice."
+
+#: djobberbase/templates/djobberbase/job_form.html:44
+#, fuzzy
+msgid "Location"
+msgstr "Žádost"
+
+#: djobberbase/templates/djobberbase/job_form.html:158
+#, fuzzy
+msgid "Online applications will be sent to this address."
+msgstr "Žádosti budou zasílány na tuto adresu."
+
+#: djobberbase/templates/djobberbase/job_form.html:175
+#, fuzzy
+msgid ""
+"<strong>Allow Online Applications</strong> (If you are unchecking it, then "
+"add a description on how to apply online above)"
+msgstr ""
+"Pokud ste toto odškrtli, pak přidejte popis jak zažádat o pracovní pozici!"
+
+#: djobberbase/admin.py:14
 msgid "Activate selected jobs."
 msgstr "Aktivovat vybrané pracovní pozice."
 
-#: admin.py:13
+#: djobberbase/admin.py:19
 msgid "Deactivate selected jobs."
 msgstr "Deaktivovat vybrané pracovní pozice."
 
-#: admin.py:17
+#: djobberbase/admin.py:24
 msgid "Mark selected jobs as spotlight."
 msgstr "Označit vybrané pracovní pozice."
 
-#: admin.py:21
+#: djobberbase/admin.py:29
 msgid "Job Details"
 msgstr "Detaily pracovní pozice"
 
-#: admin.py:23
+#: djobberbase/admin.py:31
 msgid "Company Info"
 msgstr "Informace o společnosti"
 
-#: admin.py:24
+#: djobberbase/admin.py:32
 msgid "Admin Info"
 msgstr "Informace o správcovi"
 
-#: feeds.py:20
+#: djobberbase/conf/settings.py:60
+#, python-format
+msgid "Your ad on %(site_name)s was published"
+msgstr "Vaše ponuka byla zveřejněna."
+
+#: djobberbase/feeds.py:21
 #, python-format
 msgid " %(site_name)s RSS Job feed"
 msgstr "%(site_name)s RSS"
 
-#: feeds.py:22
+#: djobberbase/feeds.py:23
 #, python-format
 msgid ": %(category)s jobs"
 msgstr ": pracovní pozice z kategorie %(category)s"
 
-#: feeds.py:33
+#: djobberbase/feeds.py:34
 msgid "Latest jobs"
 msgstr "Nejnovější pracovní pozice"
 
-#: feeds.py:35
+#: djobberbase/feeds.py:36
 #, python-format
 msgid "Latest jobs for %(category)s "
 msgstr "Nejnovější pracovní pozice z kategorie %(category)s"
 
-#: forms.py:81
+#: djobberbase/forms.py:82
 #, python-format
 msgid ""
-"You need to wait %(remaining)s more minute(s) before you can apply for a job "
-"again."
+"You need to wait %(remaining)s more minute(s) before you can apply for a job"
+" again."
 msgstr ""
 "Vyčkejte %(remaining)s minut než se budete moci ucházet o zaměstnání znovu."
 
-#: forms.py:87
+#: djobberbase/forms.py:88
 msgid "Your resume/CV has an invalid extension."
 msgstr "Váš životopis / CV má neplatnou příponu."
 
-#: forms.py:91
+#: djobberbase/forms.py:92
 #, python-format
 msgid "Your resume/CV must not exceed the file size limit. (%(size)sMB)"
 msgstr ""
 "Váš životopis / CV nesmí překročit limit velikosti souboru. ((%(size)sMB)"
 
-#: models.py:26 models.py:65 models.py:85
+#: djobberbase/models.py:93 djobberbase/models.py:125
+#: djobberbase/models.py:161
+#: djobberbase/templates/djobberbase/job_form.html:135
 msgid "Name"
 msgstr "Jméno"
 
-#: models.py:27 models.py:66
-msgid "Slug"
-msgstr "Slug"
-
-#: models.py:28 models.py:116
-msgid "Title"
-msgstr "Titul"
-
-#: models.py:29 models.py:117
+#: djobberbase/models.py:94 djobberbase/models.py:267
+#: djobberbase/models.py:364
+#: djobberbase/templates/djobberbase/job_form.html:71
 msgid "Description"
 msgstr "Popis"
 
-#: models.py:30 models.py:281
-msgid "Keywords"
-msgstr "Klíčová slova"
-
-#: models.py:31
+#: djobberbase/models.py:95
 msgid "Category order"
 msgstr "Pořadí kategorií"
 
-#: models.py:35 models.py:114
+#: djobberbase/models.py:98 djobberbase/models.py:257
 msgid "Category"
 msgstr "Kategorie"
 
-#: models.py:36
+#: djobberbase/models.py:99
 msgid "Categories"
 msgstr "Kategorie"
 
-#: models.py:69
-msgid "Type"
-msgstr "Typ"
-
-#: models.py:70
-msgid "Types"
-msgstr "Typy"
-
-#: models.py:86
-msgid "ASCII Name"
-msgstr "ASCII jméno"
-
-#: models.py:89 models.py:122
+#: djobberbase/models.py:169 djobberbase/models.py:259
 msgid "Place"
 msgstr "Město"
 
-#: models.py:90
-msgid "Cities"
-msgstr "Města"
-
-#: models.py:110
-msgid "Inactive"
-msgstr "Neaktivní"
-
-#: models.py:111
-msgid "Temporary"
-msgstr "Dočasný"
-
-#: models.py:112
-msgid "Active"
-msgstr "Aktivní"
-
-#: models.py:115
-msgid "Job Type"
-msgstr "Typ pracovní pozice"
-
-#: models.py:119
+#: djobberbase/models.py:221 djobberbase/models.py:264
 msgid "Company"
 msgstr "Společnost"
 
-#: models.py:123
-msgid "Outside location"
-msgstr "Externí lokace"
+#: djobberbase/models.py:258
+msgid "Job Type"
+msgstr "Typ pracovní pozice"
 
-#: models.py:126 models.py:282
+#: djobberbase/models.py:265
+#: djobberbase/templates/djobberbase/job_form.html:36
+msgid "Title"
+msgstr "Titul"
+
+#: djobberbase/models.py:273 djobberbase/models.py:275
+#: djobberbase/models.py:389
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
-#: models.py:133
-msgid "Poster email"
-msgstr "Emailová adresa zadávatele"
-
-#: models.py:133
-msgid "Applications will be sent to this address."
-msgstr "Žádosti budou zasílány na tuto adresu."
-
-#: models.py:134
-msgid "Allow online applications."
-msgstr "Umožnit online žádosti."
-
-#: models.py:135
-msgid ""
-"If you are unchecking this, then add a description on how to apply online!"
-msgstr ""
-"Pokud ste toto odškrtli, pak přidejte popis jak zažádat o pracovní pozici!"
-
-#: models.py:136
+#: djobberbase/models.py:276
 msgid "Spotlight"
 msgstr "Destacado"
 
-#: models.py:142
+#: djobberbase/models.py:283
 msgid "Job"
 msgstr "Pracovní pozice"
 
-#: models.py:143
+#: djobberbase/models.py:284
 msgid "Jobs"
 msgstr "Pracovní pozice"
 
-#: models.py:219
-msgid "You must select or type a job location."
-msgstr "Vyberte lokalitu pracovní pozice-"
-
-#: models.py:258
+#: djobberbase/models.py:357
 msgid "Application"
 msgstr "Žádost"
 
-#: models.py:259
+#: djobberbase/models.py:358
 msgid "Hit"
 msgstr "Návštěva"
 
-#: models.py:260
+#: djobberbase/models.py:359
 msgid "Spam"
 msgstr "Nahlásit spam"
 
-#: models.py:268
+#: djobberbase/models.py:368
 msgid "Job Stat"
 msgstr "Statistiky pracovní pozice"
 
-#: models.py:269
+#: djobberbase/models.py:369
 msgid "Job Stats"
 msgstr "Statistiky pracovních pozic"
 
-#: models.py:285
+#: djobberbase/models.py:388
+msgid "Keywords"
+msgstr "Klíčová slova"
+
+#: djobberbase/models.py:392
+#: djobberbase/templates/djobberbase/partials/search.html:15
 msgid "Search"
-msgstr "Vyhledávání"
+msgstr "Hledat"
 
-#: models.py:286
+#: djobberbase/models.py:393
 msgid "Searches"
-msgstr "Vyhledávání"
+msgstr "Hledat"
 
-#: views.py:62
+#: djobberbase/views.py:117
 msgid "Your application was sent successfully."
 msgstr "Vaše žádost byla odeslána."
 
-#: views.py:173
+#: djobberbase/views.py:209
 msgid "Your job post needs to be verified by a moderator."
 msgstr "Vaše pracovní ponuka musí být potvrzena administrátorem."
 
-#: views.py:180
+#: djobberbase/views.py:216
 msgid "Your job post has been published."
 msgstr "Vaše ponuka byla zveřejněna."
 
-#: views.py:218
+#: djobberbase/views.py:264
 msgid "Your job has been activated."
 msgstr "Vaše ponuka byla aktivována."
 
-#: views.py:233
+#: djobberbase/views.py:282
 msgid "Your job has been deactivated."
 msgstr "Vaše ponuka byla deaktivována"

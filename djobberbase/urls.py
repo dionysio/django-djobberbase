@@ -9,10 +9,20 @@ appname = 'djobberbase'
 urlpatterns = (
     url(r'^$', views.JobListView.as_view(), name='index'),
     url(r'^job-un', views.JobListView.as_view(), name='job_unavailable'),
-    url(r'^{}/(?:(?P<categories>[-\/a-zA-Z]*)~(?P<pk>[\d]*)/)?(?:(?P<job_type>[-\w]*)/)?$'.format(
+    url(r'^{}/employer/(?P<company>\w+)/$'.format(djobberbase_settings.DJOBBERBASE_JOBS_URL),
+        views.JobsCompany.as_view(),
+        name='company_jobs'),
+    url(r'^{}/(?:(?P<slug>[-\w]*)/)?(?:(?P<job_type>[-\w]*)/)?$'.format(
         djobberbase_settings.DJOBBERBASE_JOBS_URL),
         views.JobsCategory.as_view(),
         name='category'),
+    url(r'^{}/(?P<company>\w+)/(?P<title_slug>[-\w]+)~(?P<pk>\d+)/$'.format(djobberbase_settings.DJOBBERBASE_JOB_URL),
+        views.JobDetail.as_view(),
+        name='job_detail'),
+    url(r'^{}/(?:(?P<categories>[-\w]*)/)?(?:(?P<jobtype>[-\w]*)/)?$'.format(djobberbase_settings.DJOBBERBASE_JOBS_URL),
+        views.JobsCategory.as_view(),
+        name='job_list_all'),
+
     url(r'^{}/$'.format(djobberbase_settings.DJOBBERBASE_SEARCH_URL),
         views.JobSearchView.as_view(),
         name='job_search'),

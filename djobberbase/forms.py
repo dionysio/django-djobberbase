@@ -29,8 +29,6 @@ class JobForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'size':50}),
             'description': forms.Textarea(attrs={'rows':15, 'cols':80}),
             'place': forms.Select(attrs={'id':'city_id'}),
-            'outside_location': forms.TextInput(attrs={'id':'location_outside_ro_where', \
-             'maxlength':140, 'size':50}),
             'submitter': forms.TextInput(attrs={'size':40}),
             'url': forms.TextInput(attrs={'size':31}),
             'poster_email': forms.TextInput(attrs={'size':70}),
@@ -94,3 +92,7 @@ class ApplicationForm(forms.Form):
                 raise forms.ValidationError(_('Your resume/CV must not exceed the file size limit. (%(size)sMB)') % {'size': (permitted_size/1024)/1024})
 
         return cleaned_data          
+
+class SearchForm(forms.Form):
+    keywords = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('What kind of job?'), 'class': 'form-control input-lg'}))
+    place = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Where?'), "class": 'form-control input-lg'}))

@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<div class="row">
+    <form id="search_form" action="{% url 'djobberbase:job_search' %}">
+        {{ search_form.non_field_errors }}
+        <div class="col-sm-5 form-group">
+            {{ search_form.keywords.errors }}
+            {{ search_form.keywords }}
+        </div>
+        <div class="col-sm-5 form-group">
+            {{ search_form.place.errors }}
+            {{ search_form.place }}
+        </div>
+        <div class="col-sm-2 form-group col-xs-offset-4 col-sm-offset-0">
+            <button id="submit_search" type="submit" class="btn btn-lg btn-danger"><span class=""><i class="fa fa-search" aria-hidden="true"></i> {% trans 'Search' %}</span></button>
+        </div>
+     </form>
+</div>

@@ -7,9 +7,14 @@ import os.path
 
 from django.conf import settings
 from django.core.management import call_command
+from django.core.management.base import CommandError
+
 
 def loaddata(app, schema, fixture_name='initial_data.json'):
-    return call_command('loaddata', os.path.join('..', 'fixtures', fixture_name))
+    try:
+        return call_command('loaddata', os.path.join('..', 'fixtures', fixture_name))
+    except CommandError:
+        print('Skipped fixture {}'.format(fixture_name))
 
 class Migration(migrations.Migration):
 

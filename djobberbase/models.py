@@ -16,6 +16,7 @@ from treebeard.mp_tree import MP_Node
 from djobberbase.managers import ActiveJobsManager, TempJobsManager
 from djobberbase.conf import settings as djobberbase_settings
 
+
 class SlugMixin(models.Model):
     slug_field = ''
 
@@ -102,7 +103,7 @@ class Category(SlugMixin, MP_Node, TreeNodeMixin):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('djobberbase_category', kwargs={'categories': self.full_name, 'pk': self.pk})
+        return reverse('djobberbase:category', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.category_order:
@@ -124,8 +125,8 @@ class Type(SlugMixin, models.Model):
     name = models.CharField(_('Name'), unique=True, max_length=255)
 
     class Meta:
-        verbose_name = _('Type')
-        verbose_name_plural = _('Types')
+        verbose_name = _('Job type')
+        verbose_name_plural = _('Job types')
 
     def get_absolute_url(self):
         return reverse('djobberbase_type', kwargs={'type': self.slug})
@@ -213,25 +214,14 @@ class Company(models.Model):
     logo = models.ImageField(verbose_name=_('Company logo'), upload_to='logos')
 
     def get_absolute_url(self):
-        return reverse('djobberbase:company', self.admin.name)
+        return reverse('djobberbase:company_jobs', kwargs={'company': str(self.admin)})
 
-
-class Education(SlugMixin, models.Model):
-    slug_field = 'level'
-
-    level = models.CharField(max_length=255, unique=True)
+    class Meta:
+        verbose_name_plural = _('Companies')
+        verbose_name = _('Company')
 
     def __str__(self):
-        return self.level
-
-
-class Language(SlugMixin, models.Model):
-    slug_field = 'name'
-
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
+        return str(self.admin)
 
 
 class Job(SlugMixin, models.Model):
@@ -242,20 +232,17 @@ class Job(SlugMixin, models.Model):
     category = models.ForeignKey(Category, verbose_name=_('Category'), on_delete=models.CASCADE, related_name='jobs')
     jobtype = models.ForeignKey(Type, verbose_name=_('Job Type'), on_delete=models.CASCADE, related_name='jobs')
     place = models.ForeignKey(Place, verbose_name=_('Place'), on_delete=models.CASCADE, related_name='jobs')
-    education = models.ForeignKey(Education, blank=True, null=True)
-    language = models.ForeignKey(Language, blank=True, null=True)
+    company = models.ForeignKey(Company, verbose_name=_('Company'), on_delete=models.CASCADE, related_name="jobs")
 
-    company = models.ForeignKey(Company, verbose_name=_('Company'), on_delete=models.CASCADE)
     title = models.CharField(verbose_name=_('Title'), max_length=255)
     salary_range_min = models.PositiveIntegerField(verbose_name=_('Salary range minimum'), blank=True, null=True, db_index=True)
-    salary_range_max = models.PositiveIntegerField(verbose_name=_('Salary range maximum'), blank=True, null=True)
     description = models.TextField(_('Description'))
     description_html = models.TextField(_('Description in HTML'), blank=True)
     url = models.URLField(_('External job URL'), blank=True, null=True)
 
 
 
-    created_on = models.DateTimeField(_('Created on'), blank=True, default=timezone.now)
+    created_on = models.DateTimeField(_('Created on'), blank=True, auto_now_add=True)
     valid_until = models.DateTimeField(_('Valid until'), blank=True, null=True)
     is_active = models.BooleanField(_('Created on'), default=True, db_index=True, help_text=_('You can hide the posting from others by unchecking this option.'))
     spotlight = models.BooleanField(_('Spotlight'), default=False, blank=True, db_index=True)
@@ -267,7 +254,7 @@ class Job(SlugMixin, models.Model):
     class Meta:
         verbose_name = _('Job')
         verbose_name_plural = _('Jobs')
-        ordering = ['-created_on']
+
 
     def __str__(self):
         return self.title
@@ -298,7 +285,7 @@ class Job(SlugMixin, models.Model):
                 raise ValidationError(_("Job posting end date is in the past. "))
 
         slug = self.slug or self.get_slug(self.title)
-        similar = self.__class__.active.filter(place=self.place, submitter=self.user, slug=slug)
+        similar = self.__class__.active.filter(place=self.place, company=self.company, slug=slug)
         if similar:
             url = similar.get_absolute_url()
             raise ValidationError(_('Similar active job posting from your company already exists. You need to change the title of your posting or deactivate the original one. The original is available over here: ')+url)
@@ -344,7 +331,7 @@ class JobStat(models.Model):
         (SPAM, _('Spam')),
     )
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='stats')
-    created_on = models.DateTimeField(default=timezone.now, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True, blank=True)
     stat_type = models.CharField(max_length=1, choices=STAT_TYPES, db_index=True, blank=True)
     description = models.TextField(_('Description'))
     submitter = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -365,7 +352,7 @@ class JobStat(models.Model):
         elif self.stat_type == 'S':
             self.description = _('Spam report for [{}]{} from IP: {}').format(self.job.pk, self.job.title)
         else:
-            self.description = _("Unkwown stat")
+            self.description = _("Unknown stat")
         super(JobStat, self).save(*args, **kwargs)
 
 

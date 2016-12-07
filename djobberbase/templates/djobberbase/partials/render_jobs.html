@@ -1,23 +1,27 @@
 {% load i18n %}
+{% load humanize %}
 
 {% if jobs_title %}
     <h2>{% trans jobs_title %}</h2>
 {% endif %}
 
 {% for job in jobs %}
-    <div class="{% if is_spotlight %}row-spot{% else %}{% cycle 'row' 'row-alt' %}{% endif %}">
-        <span class="row-info">
-            <label class="jobtype jobtype-{{job.jobtype.var_name}}">{{job.jobtype.name}}</label>
-            <a href="{% url 'djobberbase:job_detail' job.company job.title|slugify job.pk %}" title="{{ job }}">{{ job }}</a>
-            <span class="la">{% trans 'at' %}</span> {{ job.company }}
-            <span class="la">{% trans 'in' %}</span> {{ job.city }}
-        </span>
-        {% if is_spotlight %}
-        <span class="spotlight">&#9734</span>
-        {% else %}
-        <span class="time-posted">
-            &#9200 {{ job.created_on|date:"j-m-Y" }}
-        </span>
-        {% endif %}
-    </div>
+    <ul class="list-unstyled {% if is_spotlight %}bg-secondary{% endif %} row">
+        <li>
+            <a href="{% url 'djobberbase:job_detail' job.company.admin job.title|slugify job.pk %}" title="{{ job }}">
+                <img class="company_logo img-responsive"  src="{{job.company.logo.url}}" onerror="/*this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=';*/"/>
+                <label class="jobtype jobtype-{{job.jobtype.var_name}}">{{job.jobtype.name}}</label>
+                {{ job }}
+                <span class="la">{% trans 'Employer:' %}</span> {{ job.company }}
+                <span class="la">{% trans 'City:' %}</span> {{ job.place.name }}
+                {% if is_spotlight %}
+                    <span class="spotlight">&#9734</span>
+                    {% else %}
+                    <span class="time-posted">
+                        <span class="la">{% trans 'Added:' %}</span> {{ job.created_on|naturaltime }}
+                    </span>
+                {% endif %}
+            </a>
+        </li>
+    </ul>
 {% endfor %}

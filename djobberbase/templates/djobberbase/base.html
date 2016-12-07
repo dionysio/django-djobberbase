@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
     {% block cdn_css %}{% endblock %}
 
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+
+
 </head>
 
 <body>
@@ -79,10 +82,11 @@
     </nav>
     {% endblock %}
 
-    <header>
-        {% block header %}
-        {% endblock %}
+    {% if search_form %}
+    <header class="container">
+         {% include 'djobberbase/partials/search.html' %}
     </header>
+    {% endif %}
 
     <div class="container">
         {% block content %}

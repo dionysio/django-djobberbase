@@ -32,8 +32,8 @@ def get_query(query_string, search_fields):
     for term in terms:
         or_query = None # Query to search for a given term in each field
         for field_name in search_fields:
-            if field_name == 'category' or field_name == 'jobtype' or field_name == 'place':
-                q = Q(**{"%s__name__icontains" % field_name: term})
+            if field_name == 'category' or field_name == 'jobtype' or field_name == 'company':
+                q = Q(**{"%s__name" % field_name: term})
             else:
                 q = Q(**{"%s__icontains" % field_name: term})
             if or_query is None:

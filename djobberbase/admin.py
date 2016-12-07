@@ -7,7 +7,7 @@ from django.conf import settings
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
 
-from djobberbase.models import Category, Type, Job, Place, JobStat, JobSearch
+from djobberbase.models import Category, Type, Job, Place, JobStat, JobSearch, Company
 
 def activate_jobs(modeladmin, request, queryset):
     queryset.update(status=Job.ACTIVE)
@@ -27,19 +27,15 @@ mark_spotlight.short_description = _('Mark selected jobs as spotlight.')
 class JobAdmin(admin.ModelAdmin):
     fieldsets = [
         (_('Job Details'), {'fields': ['jobtype', 'category', 'title', \
-                                    'place', 'outside_location', 'description']}),
-        (_('Company Info'), {'fields': ['company', 'url', 'poster_email']}),
-        (_('Admin Info'),  {'fields': ['apply_online', 'status', 'spotlight']}),
+                                    'place', 'description']}),
+        (_('Company Info'), {'fields': ['company', 'url', ]}),
+        (_('Admin Info'),  {'fields': ['spotlight']}),
     ]
     list_display = ('title', 'company', 'created_on', 'get_status_with_icon', 'spotlight')
     actions = [activate_jobs, deactivate_jobs, mark_spotlight]
 
     def get_status_with_icon(self, obj):
-        image = {
-            obj.ACTIVE: 'icon-yes.gif',
-            obj.TEMPORARY: 'icon-unknown.gif',
-            obj.INACTIVE: 'icon-no.gif',
-        }[obj.status]
+        image = 'icon-yes.gif'
 
         admin_media = settings.STATIC_URL
         icon = '<img src="%(admin_media)sadmin/img/%(image)s" alt="%(status)s" /> %(status)s'
@@ -47,7 +43,7 @@ class JobAdmin(admin.ModelAdmin):
 
         return icon % {'admin_media': admin_media,
                        'image': image,
-                       'status': obj.JOB_STATUS_CHOICES[obj.status][1]}
+                       'status': ''}
     get_status_with_icon.allow_tags = True
     get_status_with_icon.admin_order_field = 'status'
     get_status_with_icon.short_description = 'Status'
@@ -64,6 +60,9 @@ class TypeAdmin(admin.ModelAdmin):
     list_display = ('name', )
     search_fields = ('name', )
 
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = ('logo', 'admin', )
+    search_fields = ('admin__email', )
 
 class PlaceAdmin(TreeAdmin):
     form = movenodeform_factory(Place)
@@ -84,7 +83,8 @@ class JobSearchAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Type, TypeAdmin)
 admin.site.register(Place, PlaceAdmin)
-"""admin.site.register(Job, JobAdmin)
-
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(Job, JobAdmin)
+"""
 admin.site.register(JobStat, JobStatAdmin)
 admin.site.register(JobSearch, JobSearchAdmin)"""

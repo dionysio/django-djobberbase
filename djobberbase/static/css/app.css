@@ -1,0 +1,17 @@
+body {
+    max-width: 100%;
+}
+#submit_search{
+    width: 100%;
+}
+a:hover {
+    text-decoration: none;
+}
+.category-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.list-group-item {
+    border: inherit;
+}

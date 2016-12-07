@@ -1,37 +1,73 @@
 [
+    {
+    "model": "djobberbase.education",
+    "pk": 1,
+    "fields": {
+      "slug": "primary",
+      "level": "Primary"
+    }
+  },
+  {
+    "model": "djobberbase.education",
+    "pk": 2,
+    "fields": {
+      "slug": "secondary",
+      "level": "Secondary"
+    }
+  },
+  {
+    "model": "djobberbase.education",
+    "pk": 3,
+    "fields": {
+      "slug": "tertiary",
+      "level": "Tertiary"
+    }
+  },
   {
     "model": "djobberbase.category",
     "pk": 1,
     "fields": {
-      "name": "Programming",
-      "var_name": "programming",
-      "category_order": 0
+        "path": "0001",
+        "depth": 1,
+        "numchild": 0,
+        "name": "Programming",
+        "slug": "programming",
+        "description": "",
+        "category_order": 1
     }
-  },
-  {
+},
+{
     "model": "djobberbase.category",
     "pk": 2,
     "fields": {
-      "name": "Marketing",
-      "var_name": "marketing",
-      "category_order": 1
+        "path": "0002",
+        "depth": 1,
+        "numchild": 0,
+        "name": "UI&UX",
+        "slug": "ui-ux",
+        "description": "",
+        "category_order": 2
     }
-  },
-  {
+},
+{
     "model": "djobberbase.category",
     "pk": 3,
     "fields": {
-      "name": "Design",
-      "var_name": "design",
-      "category_order": 2
+        "path": "0003",
+        "depth": 1,
+        "numchild": 0,
+        "name": "Design",
+        "slug": "design",
+        "description": "",
+        "category_order": 3
     }
-  },
+},
   {
     "model": "djobberbase.type",
     "pk": 1,
     "fields": {
       "name": "Full time",
-      "var_name": "fulltime"
+      "slug": "full-time"
     }
   },
   {
@@ -39,7 +75,7 @@
     "pk": 2,
     "fields": {
       "name": "Part time",
-      "var_name": "parttime"
+      "slug": "part-time"
     }
   },
   {
@@ -47,61 +83,1681 @@
     "pk": 3,
     "fields": {
       "name": "Freelance",
-      "var_name": "freelance"
+      "slug": "freelance"
     }
-  },  
+  },
   {
-    "model": "djobberbase.city",
+    "model": "djobberbase.place",
     "pk": 1,
     "fields": {
-      "name": "Los Angeles",
-      "ascii_name": "los-angeles"
+        "path": "000E",
+        "depth": 1,
+        "numchild": 1,
+        "name": "Los Angeles",
+        "slug": "los-angeles",
+        "place_type": 4
     }
   },
   {
-    "model": "djobberbase.city",
-    "pk": 2,
-    "fields": {
-      "name": "Mumbai",
-      "ascii_name": "mumbai"
-    }
+      "model": "djobberbase.place",
+      "pk": 2,
+      "fields": {
+          "path": "000D",
+          "depth": 1,
+          "numchild": 501,
+          "name": "Mumbai",
+          "slug": "mumbai",
+          "place_type": 4
+      }
   },
   {
-    "model": "djobberbase.city",
-    "pk": 3,
-    "fields": {
-      "name": "London",
-      "ascii_name": "london"
-    }
+      "model": "djobberbase.place",
+      "pk": 3,
+      "fields": {
+          "path": "000C",
+          "depth": 1,
+          "numchild": 307,
+          "name": "London",
+          "slug": "london",
+          "place_type": 4
+      }
   },
-  {
-    "model": "djobberbase.job",
-    "pk": 1,
-    "fields": {
-      "category": 1,
-      "jobtype": 2,
-      "title": "Web developer",
-      "description": "Lorem ipsum.",
-      "company": "Tyrell",
-      "joburl": "web-developer-at-tyrell",
-      "city": 3,
-      "status": 2,
-      "poster_email": "poster@email.com"
+    {
+        "pk": 1,
+        "fields": {
+            "code": "ab",
+            "english_name": "Abkhaz",
+            "native_name": "аҧсуа"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 2,
+        "fields": {
+            "code": "aa",
+            "english_name": "Afar",
+            "native_name": "Afaraf"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 3,
+        "fields": {
+            "code": "af",
+            "english_name": "Afrikaans",
+            "native_name": "Afrikaans"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 4,
+        "fields": {
+            "code": "ak",
+            "english_name": "Akan",
+            "native_name": "Akan"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 5,
+        "fields": {
+            "code": "sq",
+            "english_name": "Albanian",
+            "native_name": "Shqip"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 6,
+        "fields": {
+            "code": "am",
+            "english_name": "Amharic",
+            "native_name": "አማርኛ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 7,
+        "fields": {
+            "code": "ar",
+            "english_name": "Arabic",
+            "native_name": "العربية"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 8,
+        "fields": {
+            "code": "an",
+            "english_name": "Aragonese",
+            "native_name": "Aragonés"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 9,
+        "fields": {
+            "code": "hy",
+            "english_name": "Armenian",
+            "native_name": "Հայերեն"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 10,
+        "fields": {
+            "code": "as",
+            "english_name": "Assamese",
+            "native_name": "অসমীয়া"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 11,
+        "fields": {
+            "code": "av",
+            "english_name": "Avaric",
+            "native_name": "авар мацӀ, магӀарул мацӀ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 12,
+        "fields": {
+            "code": "ae",
+            "english_name": "Avestan",
+            "native_name": "avesta"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 13,
+        "fields": {
+            "code": "ay",
+            "english_name": "Aymara",
+            "native_name": "aymar aru"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 14,
+        "fields": {
+            "code": "az",
+            "english_name": "Azerbaijani",
+            "native_name": "azərbaycan dili"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 15,
+        "fields": {
+            "code": "bm",
+            "english_name": "Bambara",
+            "native_name": "bamanankan"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 16,
+        "fields": {
+            "code": "ba",
+            "english_name": "Bashkir",
+            "native_name": "башҡорт теле"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 17,
+        "fields": {
+            "code": "eu",
+            "english_name": "Basque",
+            "native_name": "euskara, euskera"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 18,
+        "fields": {
+            "code": "be",
+            "english_name": "Belarusian",
+            "native_name": "Беларуская"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 19,
+        "fields": {
+            "code": "bn",
+            "english_name": "Bengali",
+            "native_name": "বাংলা"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 20,
+        "fields": {
+            "code": "bh",
+            "english_name": "Bihari",
+            "native_name": "भोजपुरी"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 21,
+        "fields": {
+            "code": "bi",
+            "english_name": "Bislama",
+            "native_name": "Bislama"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 22,
+        "fields": {
+            "code": "bs",
+            "english_name": "Bosnian",
+            "native_name": "bosanski jezik"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 23,
+        "fields": {
+            "code": "br",
+            "english_name": "Breton",
+            "native_name": "brezhoneg"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 24,
+        "fields": {
+            "code": "bg",
+            "english_name": "Bulgarian",
+            "native_name": "български език"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 25,
+        "fields": {
+            "code": "my",
+            "english_name": "Burmese",
+            "native_name": "ဗမာစာ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 26,
+        "fields": {
+            "code": "ca",
+            "english_name": "Catalan; Valencian",
+            "native_name": "Català"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 27,
+        "fields": {
+            "code": "ch",
+            "english_name": "Chamorro",
+            "native_name": "Chamoru"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 28,
+        "fields": {
+            "code": "ce",
+            "english_name": "Chechen",
+            "native_name": "нохчийн мотт"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 29,
+        "fields": {
+            "code": "ny",
+            "english_name": "Chichewa; Chewa; Nyanja",
+            "native_name": "chiCheŵa, chinyanja"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 30,
+        "fields": {
+            "code": "zh",
+            "english_name": "Chinese",
+            "native_name": "中文 (Zhōngwén), 汉语, 漢語"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 31,
+        "fields": {
+            "code": "cv",
+            "english_name": "Chuvash",
+            "native_name": "чӑваш чӗлхи"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 32,
+        "fields": {
+            "code": "kw",
+            "english_name": "Cornish",
+            "native_name": "Kernewek"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 33,
+        "fields": {
+            "code": "co",
+            "english_name": "Corsican",
+            "native_name": "corsu, lingua corsa"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 34,
+        "fields": {
+            "code": "cr",
+            "english_name": "Cree",
+            "native_name": "ᓀᐦᐃᔭᐍᐏᐣ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 35,
+        "fields": {
+            "code": "hr",
+            "english_name": "Croatian",
+            "native_name": "hrvatski"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 36,
+        "fields": {
+            "code": "cs",
+            "english_name": "Czech",
+            "native_name": "česky, čeština"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 37,
+        "fields": {
+            "code": "da",
+            "english_name": "Danish",
+            "native_name": "dansk"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 38,
+        "fields": {
+            "code": "dv",
+            "english_name": "Divehi; Dhivehi; Maldivian;",
+            "native_name": "ދިވެހި"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 39,
+        "fields": {
+            "code": "nl",
+            "english_name": "Dutch",
+            "native_name": "Nederlands, Vlaams"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 40,
+        "fields": {
+            "code": "en",
+            "english_name": "English",
+            "native_name": "English"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 41,
+        "fields": {
+            "code": "eo",
+            "english_name": "Esperanto",
+            "native_name": "Esperanto"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 42,
+        "fields": {
+            "code": "et",
+            "english_name": "Estonian",
+            "native_name": "eesti, eesti keel"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 43,
+        "fields": {
+            "code": "ee",
+            "english_name": "Ewe",
+            "native_name": "Eʋegbe"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 44,
+        "fields": {
+            "code": "fo",
+            "english_name": "Faroese",
+            "native_name": "føroyskt"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 45,
+        "fields": {
+            "code": "fj",
+            "english_name": "Fijian",
+            "native_name": "vosa Vakaviti"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 46,
+        "fields": {
+            "code": "fi",
+            "english_name": "Finnish",
+            "native_name": "suomi, suomen kieli"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 47,
+        "fields": {
+            "code": "fr",
+            "english_name": "French",
+            "native_name": "français, langue française"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 48,
+        "fields": {
+            "code": "ff",
+            "english_name": "Fula; Fulah; Pulaar; Pular",
+            "native_name": "Fulfulde, Pulaar, Pular"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 49,
+        "fields": {
+            "code": "gl",
+            "english_name": "Galician",
+            "native_name": "Galego"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 50,
+        "fields": {
+            "code": "ka",
+            "english_name": "Georgian",
+            "native_name": "ქართული"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 51,
+        "fields": {
+            "code": "de",
+            "english_name": "German",
+            "native_name": "Deutsch"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 52,
+        "fields": {
+            "code": "el",
+            "english_name": "Greek, Modern",
+            "native_name": "Ελληνικά"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 53,
+        "fields": {
+            "code": "gn",
+            "english_name": "Guaraní",
+            "native_name": "Avañeẽ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 54,
+        "fields": {
+            "code": "gu",
+            "english_name": "Gujarati",
+            "native_name": "ગુજરાતી"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 55,
+        "fields": {
+            "code": "ht",
+            "english_name": "Haitian; Haitian Creole",
+            "native_name": "Kreyòl ayisyen"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 56,
+        "fields": {
+            "code": "ha",
+            "english_name": "Hausa",
+            "native_name": "Hausa, هَوُسَ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 57,
+        "fields": {
+            "code": "he",
+            "english_name": "Hebrew (modern)",
+            "native_name": "עברית"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 58,
+        "fields": {
+            "code": "hz",
+            "english_name": "Herero",
+            "native_name": "Otjiherero"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 59,
+        "fields": {
+            "code": "hi",
+            "english_name": "Hindi",
+            "native_name": "हिन्दी, हिंदी"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 60,
+        "fields": {
+            "code": "ho",
+            "english_name": "Hiri Motu",
+            "native_name": "Hiri Motu"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 61,
+        "fields": {
+            "code": "hu",
+            "english_name": "Hungarian",
+            "native_name": "Magyar"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 62,
+        "fields": {
+            "code": "ia",
+            "english_name": "Interlingua",
+            "native_name": "Interlingua"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 63,
+        "fields": {
+            "code": "id",
+            "english_name": "Indonesian",
+            "native_name": "Bahasa Indonesia"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 64,
+        "fields": {
+            "code": "ie",
+            "english_name": "Interlingue",
+            "native_name": "Originally called Occidental; then Interlingue after WWII"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 65,
+        "fields": {
+            "code": "ga",
+            "english_name": "Irish",
+            "native_name": "Gaeilge"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 66,
+        "fields": {
+            "code": "ig",
+            "english_name": "Igbo",
+            "native_name": "Asụsụ Igbo"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 67,
+        "fields": {
+            "code": "ik",
+            "english_name": "Inupiaq",
+            "native_name": "Iñupiaq, Iñupiatun"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 68,
+        "fields": {
+            "code": "io",
+            "english_name": "Ido",
+            "native_name": "Ido"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 69,
+        "fields": {
+            "code": "is",
+            "english_name": "Icelandic",
+            "native_name": "Íslenska"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 70,
+        "fields": {
+            "code": "it",
+            "english_name": "Italian",
+            "native_name": "Italiano"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 71,
+        "fields": {
+            "code": "iu",
+            "english_name": "Inuktitut",
+            "native_name": "ᐃᓄᒃᑎᑐᑦ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 72,
+        "fields": {
+            "code": "ja",
+            "english_name": "Japanese",
+            "native_name": "日本語 (にほんご／にっぽんご)"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 73,
+        "fields": {
+            "code": "jv",
+            "english_name": "Javanese",
+            "native_name": "basa Jawa"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 74,
+        "fields": {
+            "code": "kl",
+            "english_name": "Kalaallisut, Greenlandic",
+            "native_name": "kalaallisut, kalaallit oqaasii"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 75,
+        "fields": {
+            "code": "kn",
+            "english_name": "Kannada",
+            "native_name": "ಕನ್ನಡ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 76,
+        "fields": {
+            "code": "kr",
+            "english_name": "Kanuri",
+            "native_name": "Kanuri"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 77,
+        "fields": {
+            "code": "ks",
+            "english_name": "Kashmiri",
+            "native_name": "कश्मीरी, كشميري‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 78,
+        "fields": {
+            "code": "kk",
+            "english_name": "Kazakh",
+            "native_name": "Қазақ тілі"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 79,
+        "fields": {
+            "code": "km",
+            "english_name": "Khmer",
+            "native_name": "ភាសាខ្មែរ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 80,
+        "fields": {
+            "code": "ki",
+            "english_name": "Kikuyu, Gikuyu",
+            "native_name": "Gĩkũyũ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 81,
+        "fields": {
+            "code": "rw",
+            "english_name": "Kinyarwanda",
+            "native_name": "Ikinyarwanda"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 82,
+        "fields": {
+            "code": "ky",
+            "english_name": "Kirghiz, Kyrgyz",
+            "native_name": "кыргыз тили"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 83,
+        "fields": {
+            "code": "kv",
+            "english_name": "Komi",
+            "native_name": "коми кыв"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 84,
+        "fields": {
+            "code": "kg",
+            "english_name": "Kongo",
+            "native_name": "KiKongo"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 85,
+        "fields": {
+            "code": "ko",
+            "english_name": "Korean",
+            "native_name": "한국어 (韓國語), 조선말 (朝鮮語)"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 86,
+        "fields": {
+            "code": "ku",
+            "english_name": "Kurdish",
+            "native_name": "Kurdî, كوردی‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 87,
+        "fields": {
+            "code": "kj",
+            "english_name": "Kwanyama, Kuanyama",
+            "native_name": "Kuanyama"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 88,
+        "fields": {
+            "code": "la",
+            "english_name": "Latin",
+            "native_name": "latine, lingua latina"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 89,
+        "fields": {
+            "code": "lb",
+            "english_name": "Luxembourgish, Letzeburgesch",
+            "native_name": "Lëtzebuergesch"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 90,
+        "fields": {
+            "code": "lg",
+            "english_name": "Luganda",
+            "native_name": "Luganda"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 91,
+        "fields": {
+            "code": "li",
+            "english_name": "Limburgish, Limburgan, Limburger",
+            "native_name": "Limburgs"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 92,
+        "fields": {
+            "code": "ln",
+            "english_name": "Lingala",
+            "native_name": "Lingála"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 93,
+        "fields": {
+            "code": "lo",
+            "english_name": "Lao",
+            "native_name": "ພາສາລາວ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 94,
+        "fields": {
+            "code": "lt",
+            "english_name": "Lithuanian",
+            "native_name": "lietuvių kalba"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 95,
+        "fields": {
+            "code": "lu",
+            "english_name": "Luba-Katanga",
+            "native_name": ""
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 96,
+        "fields": {
+            "code": "lv",
+            "english_name": "Latvian",
+            "native_name": "latviešu valoda"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 97,
+        "fields": {
+            "code": "gv",
+            "english_name": "Manx",
+            "native_name": "Gaelg, Gailck"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 98,
+        "fields": {
+            "code": "mk",
+            "english_name": "Macedonian",
+            "native_name": "македонски јазик"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 99,
+        "fields": {
+            "code": "mg",
+            "english_name": "Malagasy",
+            "native_name": "Malagasy fiteny"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 100,
+        "fields": {
+            "code": "ms",
+            "english_name": "Malay",
+            "native_name": "bahasa Melayu, بهاس ملايو‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 101,
+        "fields": {
+            "code": "ml",
+            "english_name": "Malayalam",
+            "native_name": "മലയാളം"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 102,
+        "fields": {
+            "code": "mt",
+            "english_name": "Maltese",
+            "native_name": "Malti"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 103,
+        "fields": {
+            "code": "mi",
+            "english_name": "Māori",
+            "native_name": "te reo Māori"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 104,
+        "fields": {
+            "code": "mr",
+            "english_name": "Marathi (Marāṭhī)",
+            "native_name": "मराठी"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 105,
+        "fields": {
+            "code": "mh",
+            "english_name": "Marshallese",
+            "native_name": "Kajin M̧ajeļ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 106,
+        "fields": {
+            "code": "mn",
+            "english_name": "Mongolian",
+            "native_name": "монгол"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 107,
+        "fields": {
+            "code": "na",
+            "english_name": "Nauru",
+            "native_name": "Ekakairũ Naoero"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 108,
+        "fields": {
+            "code": "nv",
+            "english_name": "Navajo, Navaho",
+            "native_name": "Diné bizaad, Dinékʼehǰí"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 109,
+        "fields": {
+            "code": "nb",
+            "english_name": "Norwegian Bokmål",
+            "native_name": "Norsk bokmål"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 110,
+        "fields": {
+            "code": "nd",
+            "english_name": "North Ndebele",
+            "native_name": "Ndebele"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 111,
+        "fields": {
+            "code": "ne",
+            "english_name": "Nepali",
+            "native_name": "नेपाली"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 112,
+        "fields": {
+            "code": "ng",
+            "english_name": "Ndonga",
+            "native_name": "Owambo"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 113,
+        "fields": {
+            "code": "nn",
+            "english_name": "Norwegian Nynorsk",
+            "native_name": "Norsk nynorsk"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 114,
+        "fields": {
+            "code": "no",
+            "english_name": "Norwegian",
+            "native_name": "Norsk"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 115,
+        "fields": {
+            "code": "ii",
+            "english_name": "Nuosu",
+            "native_name": "ꆈꌠ꒿ Nuosuhxop"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 116,
+        "fields": {
+            "code": "nr",
+            "english_name": "South Ndebele",
+            "native_name": "isiNdebele"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 117,
+        "fields": {
+            "code": "oc",
+            "english_name": "Occitan",
+            "native_name": "Occitan"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 118,
+        "fields": {
+            "code": "oj",
+            "english_name": "Ojibwe, Ojibwa",
+            "native_name": "ᐊᓂᔑᓈᐯᒧᐎᓐ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 119,
+        "fields": {
+            "code": "cu",
+            "english_name": "Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic",
+            "native_name": "ѩзыкъ словѣньскъ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 120,
+        "fields": {
+            "code": "om",
+            "english_name": "Oromo",
+            "native_name": "Afaan Oromoo"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 121,
+        "fields": {
+            "code": "or",
+            "english_name": "Oriya",
+            "native_name": "ଓଡ଼ିଆ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 122,
+        "fields": {
+            "code": "os",
+            "english_name": "Ossetian, Ossetic",
+            "native_name": "ирон æвзаг"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 123,
+        "fields": {
+            "code": "pa",
+            "english_name": "Panjabi, Punjabi",
+            "native_name": "ਪੰਜਾਬੀ, پنجابی‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 124,
+        "fields": {
+            "code": "pi",
+            "english_name": "Pāli",
+            "native_name": "पाऴि"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 125,
+        "fields": {
+            "code": "fa",
+            "english_name": "Persian",
+            "native_name": "فارسی"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 126,
+        "fields": {
+            "code": "pl",
+            "english_name": "Polish",
+            "native_name": "polski"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 127,
+        "fields": {
+            "code": "ps",
+            "english_name": "Pashto, Pushto",
+            "native_name": "پښتو"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 128,
+        "fields": {
+            "code": "pt",
+            "english_name": "Portuguese",
+            "native_name": "Português"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 129,
+        "fields": {
+            "code": "qu",
+            "english_name": "Quechua",
+            "native_name": "Runa Simi, Kichwa"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 130,
+        "fields": {
+            "code": "rm",
+            "english_name": "Romansh",
+            "native_name": "rumantsch grischun"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 131,
+        "fields": {
+            "code": "rn",
+            "english_name": "Kirundi",
+            "native_name": "kiRundi"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 132,
+        "fields": {
+            "code": "ro",
+            "english_name": "Romanian, Moldavian, Moldovan",
+            "native_name": "română"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 133,
+        "fields": {
+            "code": "ru",
+            "english_name": "Russian",
+            "native_name": "русский язык"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 134,
+        "fields": {
+            "code": "sa",
+            "english_name": "Sanskrit (Saṁskṛta)",
+            "native_name": "संस्कृतम्"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 135,
+        "fields": {
+            "code": "sc",
+            "english_name": "Sardinian",
+            "native_name": "sardu"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 136,
+        "fields": {
+            "code": "sd",
+            "english_name": "Sindhi",
+            "native_name": "सिन्धी, سنڌي، سندھی‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 137,
+        "fields": {
+            "code": "se",
+            "english_name": "Northern Sami",
+            "native_name": "Davvisámegiella"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 138,
+        "fields": {
+            "code": "sm",
+            "english_name": "Samoan",
+            "native_name": "gagana faa Samoa"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 139,
+        "fields": {
+            "code": "sg",
+            "english_name": "Sango",
+            "native_name": "yângâ tî sängö"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 140,
+        "fields": {
+            "code": "sr",
+            "english_name": "Serbian",
+            "native_name": "српски језик"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 141,
+        "fields": {
+            "code": "gd",
+            "english_name": "Scottish Gaelic; Gaelic",
+            "native_name": "Gàidhlig"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 142,
+        "fields": {
+            "code": "sn",
+            "english_name": "Shona",
+            "native_name": "chiShona"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 143,
+        "fields": {
+            "code": "si",
+            "english_name": "Sinhala, Sinhalese",
+            "native_name": "සිංහල"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 144,
+        "fields": {
+            "code": "sk",
+            "english_name": "Slovak",
+            "native_name": "slovenčina"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 145,
+        "fields": {
+            "code": "sl",
+            "english_name": "Slovene",
+            "native_name": "slovenščina"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 146,
+        "fields": {
+            "code": "so",
+            "english_name": "Somali",
+            "native_name": "Soomaaliga, af Soomaali"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 147,
+        "fields": {
+            "code": "st",
+            "english_name": "Southern Sotho",
+            "native_name": "Sesotho"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 148,
+        "fields": {
+            "code": "es",
+            "english_name": "Spanish; Castilian",
+            "native_name": "español, castellano"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 149,
+        "fields": {
+            "code": "su",
+            "english_name": "Sundanese",
+            "native_name": "Basa Sunda"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 150,
+        "fields": {
+            "code": "sw",
+            "english_name": "Swahili",
+            "native_name": "Kiswahili"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 151,
+        "fields": {
+            "code": "ss",
+            "english_name": "Swati",
+            "native_name": "SiSwati"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 152,
+        "fields": {
+            "code": "sv",
+            "english_name": "Swedish",
+            "native_name": "svenska"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 153,
+        "fields": {
+            "code": "ta",
+            "english_name": "Tamil",
+            "native_name": "தமிழ்"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 154,
+        "fields": {
+            "code": "te",
+            "english_name": "Telugu",
+            "native_name": "తెలుగు"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 155,
+        "fields": {
+            "code": "tg",
+            "english_name": "Tajik",
+            "native_name": "тоҷикӣ, toğikī, تاجیکی‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 156,
+        "fields": {
+            "code": "th",
+            "english_name": "Thai",
+            "native_name": "ไทย"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 157,
+        "fields": {
+            "code": "ti",
+            "english_name": "Tigrinya",
+            "native_name": "ትግርኛ"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 158,
+        "fields": {
+            "code": "bo",
+            "english_name": "Tibetan Standard, Tibetan, Central",
+            "native_name": "བོད་ཡིག"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 159,
+        "fields": {
+            "code": "tk",
+            "english_name": "Turkmen",
+            "native_name": "Türkmen, Түркмен"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 160,
+        "fields": {
+            "code": "tl",
+            "english_name": "Tagalog",
+            "native_name": "Wikang Tagalog, ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 161,
+        "fields": {
+            "code": "tn",
+            "english_name": "Tswana",
+            "native_name": "Setswana"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 162,
+        "fields": {
+            "code": "to",
+            "english_name": "Tonga (Tonga Islands)",
+            "native_name": "faka Tonga"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 163,
+        "fields": {
+            "code": "tr",
+            "english_name": "Turkish",
+            "native_name": "Türkçe"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 164,
+        "fields": {
+            "code": "ts",
+            "english_name": "Tsonga",
+            "native_name": "Xitsonga"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 165,
+        "fields": {
+            "code": "tt",
+            "english_name": "Tatar",
+            "native_name": "татарча, tatarça, تاتارچا‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 166,
+        "fields": {
+            "code": "tw",
+            "english_name": "Twi",
+            "native_name": "Twi"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 167,
+        "fields": {
+            "code": "ty",
+            "english_name": "Tahitian",
+            "native_name": "Reo Tahiti"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 168,
+        "fields": {
+            "code": "ug",
+            "english_name": "Uighur, Uyghur",
+            "native_name": "Uyƣurqə, ئۇيغۇرچە‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 169,
+        "fields": {
+            "code": "uk",
+            "english_name": "Ukrainian",
+            "native_name": "українська"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 170,
+        "fields": {
+            "code": "ur",
+            "english_name": "Urdu",
+            "native_name": "اردو"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 171,
+        "fields": {
+            "code": "uz",
+            "english_name": "Uzbek",
+            "native_name": "zbek, Ўзбек, أۇزبېك‎"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 172,
+        "fields": {
+            "code": "ve",
+            "english_name": "Venda",
+            "native_name": "Tshivenḓa"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 173,
+        "fields": {
+            "code": "vi",
+            "english_name": "Vietnamese",
+            "native_name": "Tiếng Việt"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 174,
+        "fields": {
+            "code": "vo",
+            "english_name": "Volapük",
+            "native_name": "Volapük"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 175,
+        "fields": {
+            "code": "wa",
+            "english_name": "Walloon",
+            "native_name": "Walon"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 176,
+        "fields": {
+            "code": "cy",
+            "english_name": "Welsh",
+            "native_name": "Cymraeg"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 177,
+        "fields": {
+            "code": "wo",
+            "english_name": "Wolof",
+            "native_name": "Wollof"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 178,
+        "fields": {
+            "code": "fy",
+            "english_name": "Western Frisian",
+            "native_name": "Frysk"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 179,
+        "fields": {
+            "code": "xh",
+            "english_name": "Xhosa",
+            "native_name": "isiXhosa"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 180,
+        "fields": {
+            "code": "yi",
+            "english_name": "Yiddish",
+            "native_name": "ייִדיש"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 181,
+        "fields": {
+            "code": "yo",
+            "english_name": "Yoruba",
+            "native_name": "Yorùbá"
+        },
+        "model": "djobberbase.language"
+    },
+    {
+        "pk": 182,
+        "fields": {
+            "code": "za",
+            "english_name": "Zhuang, Chuang",
+            "native_name": "Saɯ cueŋƅ, Saw cuengh"
+        },
+        "model": "djobberbase.language"
     }
-  },
-  {
-    "model": "djobberbase.job",
-    "pk": 2,
-    "fields": {
-      "category": 3,
-      "jobtype": 3,
-      "title": "Designer",
-      "description": "Lorem ipsum.",
-      "company": "Tyrell",
-      "joburl": "designer-at-tyrell",
-      "city": 2,
-      "status": 2,
-      "poster_email": "poster@email.com"
-    }
-  }  
 ]
