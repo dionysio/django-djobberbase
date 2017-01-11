@@ -89,5 +89,3 @@ ENV/
 # Rope project settings
 .ropeproject
 
-fixtures/test_data.json
-
