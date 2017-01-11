@@ -10,6 +10,7 @@ setup(
     ],
     package_data = {       
         'djobberbase': [
+            'migrations/*'
             'templates/djobberbase/emails/*.txt',
             'templates/djobberbase/emails/*.html',
             'templates/djobberbase/*.html',
